@@ -5,7 +5,7 @@
     <!-- POM 模型版本 -->
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 继承 hongz-parent：响应结构归一化与搜集库 -->
+    <!-- 继承 cc-hongz-ztools：响应结构归一化与搜集库 -->
     <parent>
         <groupId>com.hongz</groupId>
         <artifactId>cc-hongz-ztools</artifactId>
