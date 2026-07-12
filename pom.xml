@@ -7,10 +7,10 @@
 
     <!-- 继承 hongz-parent：响应结构归一化与搜集库 -->
     <parent>
-        <groupId>cc.hongz</groupId>
-        <artifactId>hongz-parent</artifactId>
+        <groupId>com.hongz</groupId>
+        <artifactId>cc-hongz-ztools</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <!-- 多源响应体（AjaxResult、Map、HTTP 状态载体等）归一化与类型目录 -->
@@ -23,8 +23,8 @@
     <dependencies>
         <!-- ZTools 核心：字符串、Map、反射等工具 -->
         <dependency>
-            <groupId>cc.hongz</groupId>
-            <artifactId>hongz-ztools-core</artifactId>
+            <groupId>com.hongz</groupId>
+            <artifactId>cc-hongz-ztools-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Lombok：编译期注解处理 -->
