@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 import java.util.Map;
 
 /**
  * Spring ResponseEntity 响应包装类.
  * <p>
- * 将 Spring {@link org.springframework.http.ResponseEntity} 转换为统一的 JSON 格式。
+ * 将 Spring {@link ResponseEntity} 转换为统一的 JSON 格式。
  * </p>
  *
  * @param <T> 响应体类型
@@ -22,6 +24,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("checkstyle:MagicNumber")
 public class SpringResponseEntityWrapper<T> {
 
     /**
@@ -61,7 +64,13 @@ public class SpringResponseEntityWrapper<T> {
      * @param <T>             响应体类型
      * @return SpringResponseEntityWrapper
      */
-    public static <T> SpringResponseEntityWrapper<T> success(final int statusCodeValue, final String statusCodeName, final T body, final Map<String, List<String>> headers) {
+    public static <T> SpringResponseEntityWrapper<T> success(
+            final int statusCodeValue,
+            final String statusCodeName,
+            final T body,
+            final Map<String,
+            List<String>> headers
+        ) {
         return SpringResponseEntityWrapper.<T>builder()
                 .statusCodeValue(statusCodeValue)
                 .statusCodeName(statusCodeName)
@@ -78,7 +87,7 @@ public class SpringResponseEntityWrapper<T> {
      * @param <T>            响应体类型
      * @return SpringResponseEntityWrapper
      */
-    public static <T> SpringResponseEntityWrapper<T> from(final org.springframework.http.ResponseEntity<T> responseEntity) {
+    public static <T> SpringResponseEntityWrapper<T> from(final ResponseEntity<T> responseEntity) {
         return SpringResponseEntityWrapper.<T>builder()
                 .statusCodeValue(responseEntity.getStatusCodeValue())
                 .statusCodeName(responseEntity.getStatusCode().toString())

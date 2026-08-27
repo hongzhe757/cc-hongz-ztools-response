@@ -72,7 +72,13 @@ public class RabbitMqRpcResponse<T> {
      * @param <T>           数据类型
      * @return RabbitMqRpcResponse
      */
-    public static <T> RabbitMqRpcResponse<T> withProperties(final String correlationId, final String replyTo, final T data, final Map<String, Object> properties) {
+    public static <T> RabbitMqRpcResponse<T> withProperties(
+            final String correlationId,
+            final String replyTo,
+            final T data,
+            final Map<String,
+            Object> properties
+        ) {
         return RabbitMqRpcResponse.<T>builder()
                 .correlationId(correlationId)
                 .replyTo(replyTo)

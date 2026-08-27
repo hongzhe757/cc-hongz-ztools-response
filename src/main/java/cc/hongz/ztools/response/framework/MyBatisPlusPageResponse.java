@@ -88,7 +88,13 @@ public class MyBatisPlusPageResponse<T> {
      * @param <T>     数据类型
      * @return MyBatisPlusPageResponse
      */
-    public static <T> MyBatisPlusPageResponse<T> of(final long total, final long size, final long current, final long pages, final List<T> records) {
+    public static <T> MyBatisPlusPageResponse<T> of(
+            final long total,
+            final long size,
+            final long current,
+            final long pages,
+            final List<T> records
+        ) {
         return MyBatisPlusPageResponse.<T>builder()
                 .total(total)
                 .size(size)

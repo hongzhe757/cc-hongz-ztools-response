@@ -1,20 +1,13 @@
 package cc.hongz.ztools.response;
 
 import cc.hongz.ztools.response.ajax.AjaxResult;
-import cc.hongz.ztools.response.database.ElasticsearchResponse;
-import cc.hongz.ztools.response.database.MongoDbResponse;
 import cc.hongz.ztools.response.database.RedisResponse;
-import cc.hongz.ztools.response.framework.ActuatorHealthResponse;
 import cc.hongz.ztools.response.framework.MyBatisPlusPageResponse;
-import cc.hongz.ztools.response.framework.OAuth2TokenResponse;
 import cc.hongz.ztools.response.framework.PageHelperPageResponse;
 import cc.hongz.ztools.response.generic.JsonResponse;
 import cc.hongz.ztools.response.generic.MapResponse;
 import cc.hongz.ztools.response.http.JdkHttpResponseWrapper;
-import cc.hongz.ztools.response.http.OkHttpResponseWrapper;
 import cc.hongz.ztools.response.common.DataListInfo;
-import cc.hongz.ztools.response.mq.KafkaConsumerRecordResponse;
-import cc.hongz.ztools.response.mq.RabbitMqRpcResponse;
 import cc.hongz.ztools.response.core.Result;
 import cc.hongz.ztools.response.protocol.SseEvent;
 import cc.hongz.ztools.response.protocol.WebSocketMessage;
@@ -23,7 +16,6 @@ import cc.hongz.ztools.response.standard.AliResponse;
 import cc.hongz.ztools.response.standard.BaiduResponse;
 import cc.hongz.ztools.response.standard.GraphQLResponse;
 import cc.hongz.ztools.response.standard.GrpcResponse;
-import cc.hongz.ztools.response.standard.JsonApiResponse;
 import cc.hongz.ztools.response.standard.ProblemDetail;
 import cc.hongz.ztools.response.standard.TencentResponse;
 
@@ -69,6 +61,7 @@ import cc.hongz.ztools.response.standard.TencentResponse;
  * @see ResponseConversionStrategy
  * @see ResponseConverterFactory
  */
+@SuppressWarnings("checkstyle:MagicNumber")
 public final class ResponseConverter {
 
     private ResponseConverter() {
@@ -126,9 +119,11 @@ public final class ResponseConverter {
             return AjaxResult.error("500", "响应对象为空");
         }
         if (tencentResponse.isSuccess()) {
-            return AjaxResult.success(String.valueOf(tencentResponse.getRet()), tencentResponse.getMsg(), tencentResponse.getData());
+            return AjaxResult.success(String.valueOf(tencentResponse.getRet()), tencentResponse.getMsg(),
+                tencentResponse.getData());
         } else {
-            return AjaxResult.error(String.valueOf(tencentResponse.getRet()), tencentResponse.getMsg(), tencentResponse.getData());
+            return AjaxResult.error(String.valueOf(tencentResponse.getRet()), tencentResponse.getMsg(),
+                tencentResponse.getData());
         }
     }
 
@@ -144,9 +139,11 @@ public final class ResponseConverter {
             return AjaxResult.error("500", "响应对象为空");
         }
         if (baiduResponse.isSuccess()) {
-            return AjaxResult.success(String.valueOf(baiduResponse.getErrno()), baiduResponse.getErrmsg(), baiduResponse.getData());
+            return AjaxResult.success(String.valueOf(baiduResponse.getErrno()), baiduResponse.getErrmsg(),
+                baiduResponse.getData());
         } else {
-            return AjaxResult.error(String.valueOf(baiduResponse.getErrno()), baiduResponse.getErrmsg(), baiduResponse.getData());
+            return AjaxResult.error(String.valueOf(baiduResponse.getErrno()), baiduResponse.getErrmsg(),
+                baiduResponse.getData());
         }
     }
 
@@ -248,7 +245,7 @@ public final class ResponseConverter {
      * @param pageResponse MyBatis-Plus 分页响应
      * @return DataListInfo
      */
-    public static DataListInfo toDataListInfo(final cc.hongz.ztools.response.framework.MyBatisPlusPageResponse<?> pageResponse) {
+    public static DataListInfo toDataListInfo(final MyBatisPlusPageResponse<?> pageResponse) {
         if (pageResponse == null) {
             return DataListInfo.empty();
         }
@@ -261,7 +258,7 @@ public final class ResponseConverter {
      * @param pageResponse PageHelper 分页响应
      * @return DataListInfo
      */
-    public static DataListInfo toDataListInfo(final cc.hongz.ztools.response.framework.PageHelperPageResponse<?> pageResponse) {
+    public static DataListInfo toDataListInfo(final PageHelperPageResponse<?> pageResponse) {
         if (pageResponse == null) {
             return DataListInfo.empty();
         }

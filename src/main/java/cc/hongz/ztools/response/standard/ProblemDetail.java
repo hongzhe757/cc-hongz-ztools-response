@@ -23,6 +23,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("checkstyle:MagicNumber")
 public class ProblemDetail {
 
     /**

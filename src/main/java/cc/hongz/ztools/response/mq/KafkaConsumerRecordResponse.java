@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+
 import java.util.Map;
 
 /**
@@ -69,7 +71,10 @@ public class KafkaConsumerRecordResponse<K, V> {
      * @param <V>    Value 类型
      * @return KafkaConsumerRecordResponse
      */
-    public static <K, V> KafkaConsumerRecordResponse<K, V> from(final org.apache.kafka.clients.consumer.ConsumerRecord<K, V> record) {
+    public static <K, V> KafkaConsumerRecordResponse<K, V> from(
+            final ConsumerRecord<K,
+            V> record
+        ) {
         return KafkaConsumerRecordResponse.<K, V>builder()
                 .topic(record.topic())
                 .partition(record.partition())
@@ -93,7 +98,14 @@ public class KafkaConsumerRecordResponse<K, V> {
      * @param <V>       Value 类型
      * @return KafkaConsumerRecordResponse
      */
-    public static <K, V> KafkaConsumerRecordResponse<K, V> of(final String topic, final int partition, final long offset, final long timestamp, final K key, final V value) {
+    public static <K, V> KafkaConsumerRecordResponse<K, V> of(
+            final String topic,
+            final int partition,
+            final long offset,
+            final long timestamp,
+            final K key,
+            final V value
+        ) {
         return KafkaConsumerRecordResponse.<K, V>builder()
                 .topic(topic)
                 .partition(partition)

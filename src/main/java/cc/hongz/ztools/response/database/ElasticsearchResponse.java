@@ -101,7 +101,12 @@ public class ElasticsearchResponse<T> {
      * @param <T>       数据类型
      * @return ElasticsearchResponse
      */
-    public static <T> ElasticsearchResponse<T> search(final long totalHits, final Float maxScore, final List<Hit<T>> hits, final long took) {
+    public static <T> ElasticsearchResponse<T> search(
+            final long totalHits,
+            final Float maxScore,
+            final List<Hit<T>> hits,
+            final long took
+        ) {
         return ElasticsearchResponse.<T>builder()
                 .totalHits(totalHits)
                 .maxScore(maxScore)
@@ -122,7 +127,14 @@ public class ElasticsearchResponse<T> {
      * @param <T>          数据类型
      * @return ElasticsearchResponse
      */
-    public static <T> ElasticsearchResponse<T> withAggregations(final long totalHits, final Float maxScore, final List<Hit<T>> hits, final Map<String, Object> aggregations, final long took) {
+    public static <T> ElasticsearchResponse<T> withAggregations(
+            final long totalHits,
+            final Float maxScore,
+            final List<Hit<T>> hits,
+            final Map<String,
+            Object> aggregations,
+            final long took
+        ) {
         return ElasticsearchResponse.<T>builder()
                 .totalHits(totalHits)
                 .maxScore(maxScore)

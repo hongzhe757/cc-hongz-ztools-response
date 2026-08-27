@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.springframework.web.reactive.function.client.ClientResponse;
+
 import java.util.List;
 import java.util.Map;
 
 /**
  * Spring WebClient 响应包装类.
  * <p>
- * 将 Spring WebClient {@link org.springframework.web.reactive.function.client.ClientResponse} 转换为统一的 JSON 格式。
+ * 将 Spring WebClient {@link ClientResponse} 转换为统一的 JSON 格式。
  * </p>
  *
  * @param <T> 响应体类型
@@ -22,6 +24,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("checkstyle:MagicNumber")
 public class WebClientResponseWrapper<T> {
 
     /**
@@ -61,7 +64,13 @@ public class WebClientResponseWrapper<T> {
      * @param <T>             响应体类型
      * @return WebClientResponseWrapper
      */
-    public static <T> WebClientResponseWrapper<T> success(final int statusCodeValue, final String statusCodeName, final T body, final Map<String, List<String>> headers) {
+    public static <T> WebClientResponseWrapper<T> success(
+            final int statusCodeValue,
+            final String statusCodeName,
+            final T body,
+            final Map<String,
+            List<String>> headers
+        ) {
         return WebClientResponseWrapper.<T>builder()
                 .statusCodeValue(statusCodeValue)
                 .statusCodeName(statusCodeName)
@@ -79,7 +88,10 @@ public class WebClientResponseWrapper<T> {
      * @param <T>      响应体类型
      * @return WebClientResponseWrapper
      */
-    public static <T> WebClientResponseWrapper<T> from(final org.springframework.web.reactive.function.client.ClientResponse response, final T body) {
+    public static <T> WebClientResponseWrapper<T> from(
+            final ClientResponse response,
+            final T body
+        ) {
         return WebClientResponseWrapper.<T>builder()
                 .statusCodeValue(response.statusCode().value())
                 .statusCodeName(response.statusCode().toString())

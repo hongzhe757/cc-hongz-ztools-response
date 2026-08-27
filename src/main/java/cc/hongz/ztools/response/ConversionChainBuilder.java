@@ -44,11 +44,11 @@ public class ConversionChainBuilder {
     /**
      * 设置源响应对象.
      *
-     * @param source 源响应
+     * @param newSource 源响应
      * @return 当前构建器
      */
-    public ConversionChainBuilder from(final Object source) {
-        this.source = source;
+    public ConversionChainBuilder from(final Object newSource) {
+        this.source = newSource;
         return this;
     }
 
@@ -119,7 +119,11 @@ public class ConversionChainBuilder {
      * @return 当前构建器
      */
     @SuppressWarnings("unchecked")
-    public <T> ConversionChainBuilder transformIf(final java.util.function.Predicate<T> condition, final Function<T, T> transformer) {
+    public <T> ConversionChainBuilder transformIf(
+            final java.util.function.Predicate<T> condition,
+            final Function<T,
+            T> transformer
+        ) {
         transformations.add(current -> {
             T typed = (T) current;
             return condition.test(typed) ? transformer.apply(typed) : current;

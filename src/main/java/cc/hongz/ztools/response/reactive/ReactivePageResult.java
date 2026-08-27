@@ -70,7 +70,12 @@ public class ReactivePageResult<T> {
      * @param <T>     数据类型
      * @return ReactivePageResult
      */
-    public static <T> ReactivePageResult<T> success(final Flux<T> records, final Mono<Long> total, final Integer current, final Integer size) {
+    public static <T> ReactivePageResult<T> success(
+            final Flux<T> records,
+            final Mono<Long> total,
+            final Integer current,
+            final Integer size
+        ) {
         return ReactivePageResult.<T>builder()
                 .code("200")
                 .msg("查询成功")
@@ -92,7 +97,12 @@ public class ReactivePageResult<T> {
      * @param <T>     数据类型
      * @return ReactivePageResult
      */
-    public static <T> ReactivePageResult<T> success(final Flux<T> records, final Long total, final Integer current, final Integer size) {
+    public static <T> ReactivePageResult<T> success(
+            final Flux<T> records,
+            final Long total,
+            final Integer current,
+            final Integer size
+        ) {
         return ReactivePageResult.<T>builder()
                 .code("200")
                 .msg("查询成功")

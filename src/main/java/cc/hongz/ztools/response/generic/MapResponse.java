@@ -309,22 +309,22 @@ public class MapResponse {
         /**
          * 设置状态码.
          *
-         * @param code 状态码
+         * @param newCode 状态码
          * @return Builder
          */
-        public Builder code(final String code) {
-            this.code = code;
+        public Builder code(final String newCode) {
+            this.code = newCode;
             return this;
         }
 
         /**
          * 设置消息.
          *
-         * @param msg 消息
+         * @param newMsg 消息
          * @return Builder
          */
-        public Builder msg(final String msg) {
-            this.msg = msg;
+        public Builder msg(final String newMsg) {
+            this.msg = newMsg;
             return this;
         }
 

@@ -141,7 +141,12 @@ public class SpringDataRestResponse<T> {
      * @param <T>   数据类型
      * @return SpringDataRestResponse
      */
-    public static <T> SpringDataRestResponse<T> ofPage(final List<T> items, final Map<String, Link> links, final Page page) {
+    public static <T> SpringDataRestResponse<T> ofPage(
+            final List<T> items,
+            final Map<String,
+            Link> links,
+            final Page page
+        ) {
         return SpringDataRestResponse.<T>builder()
                 .embedded(new Embedded<>(items))
                 .links(links)

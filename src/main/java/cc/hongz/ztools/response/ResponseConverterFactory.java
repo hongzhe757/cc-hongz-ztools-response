@@ -3,6 +3,17 @@ package cc.hongz.ztools.response;
 import java.util.HashMap;
 import java.util.Map;
 
+import cc.hongz.ztools.response.ajax.AjaxResult;
+import cc.hongz.ztools.response.core.Result;
+import cc.hongz.ztools.response.generic.JsonResponse;
+import cc.hongz.ztools.response.generic.MapResponse;
+import cc.hongz.ztools.response.standard.AliResponse;
+import cc.hongz.ztools.response.standard.BaiduResponse;
+import cc.hongz.ztools.response.standard.GraphQLResponse;
+import cc.hongz.ztools.response.standard.GrpcResponse;
+import cc.hongz.ztools.response.standard.ProblemDetail;
+import cc.hongz.ztools.response.standard.TencentResponse;
+
 /**
  * 响应转换器工厂 - 工厂方法模式（Factory Method Pattern）+ 注册表模式（Registry Pattern）.
  * <p>
@@ -70,7 +81,12 @@ public final class ResponseConverterFactory {
      * @param <S>        源类型泛型
      * @param <T>        目标类型泛型
      */
-    public static <S, T> void register(final Class<S> sourceType, final Class<T> targetType, final ResponseConversionStrategy<S, T> strategy) {
+    public static <S, T> void register(
+            final Class<S> sourceType,
+            final Class<T> targetType,
+            final ResponseConversionStrategy<S,
+            T> strategy
+        ) {
         if (sourceType == null || targetType == null || strategy == null) {
             throw new IllegalArgumentException("参数不能为空");
         }
@@ -88,7 +104,10 @@ public final class ResponseConverterFactory {
      * @return 转换策略，如果不存在则返回 null
      */
     @SuppressWarnings("unchecked")
-    public static <S, T> ResponseConversionStrategy<S, T> getStrategy(final Class<S> sourceType, final Class<T> targetType) {
+    public static <S, T> ResponseConversionStrategy<S, T> getStrategy(
+            final Class<S> sourceType,
+            final Class<T> targetType
+        ) {
         String key = generateKey(sourceType, targetType);
         return (ResponseConversionStrategy<S, T>) STRATEGIES.get(key);
     }
@@ -171,87 +190,87 @@ public final class ResponseConverterFactory {
      */
     private static void registerDefaultStrategies() {
         // Result -> AjaxResult
-        register(cc.hongz.ztools.response.core.Result.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(Result.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // AliResponse -> AjaxResult
-        register(cc.hongz.ztools.response.standard.AliResponse.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(AliResponse.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // TencentResponse -> AjaxResult
-        register(cc.hongz.ztools.response.standard.TencentResponse.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(TencentResponse.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // BaiduResponse -> AjaxResult
-        register(cc.hongz.ztools.response.standard.BaiduResponse.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(BaiduResponse.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // ProblemDetail -> AjaxResult
-        register(cc.hongz.ztools.response.standard.ProblemDetail.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(ProblemDetail.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // GraphQLResponse -> AjaxResult
-        register(cc.hongz.ztools.response.standard.GraphQLResponse.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(GraphQLResponse.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // GrpcResponse -> AjaxResult
-        register(cc.hongz.ztools.response.standard.GrpcResponse.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(GrpcResponse.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // AjaxResult -> Result
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.core.Result.class,
+        register(AjaxResult.class, Result.class,
                 ResponseConverter::toResult);
 
         // AjaxResult -> AliResponse
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.standard.AliResponse.class,
+        register(AjaxResult.class, AliResponse.class,
                 ResponseConverter::toAliResponse);
 
         // AjaxResult -> TencentResponse
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.standard.TencentResponse.class,
+        register(AjaxResult.class, TencentResponse.class,
                 ResponseConverter::toTencentResponse);
 
         // AjaxResult -> BaiduResponse
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.standard.BaiduResponse.class,
+        register(AjaxResult.class, BaiduResponse.class,
                 ResponseConverter::toBaiduResponse);
 
         // AjaxResult -> ProblemDetail
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.standard.ProblemDetail.class,
+        register(AjaxResult.class, ProblemDetail.class,
                 ResponseConverter::toProblemDetail);
 
         // AjaxResult -> GraphQLResponse
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.standard.GraphQLResponse.class,
+        register(AjaxResult.class, GraphQLResponse.class,
                 ResponseConverter::toGraphQLResponse);
 
         // AjaxResult -> GrpcResponse
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.standard.GrpcResponse.class,
+        register(AjaxResult.class, GrpcResponse.class,
                 ResponseConverter::toGrpcResponse);
 
         // AliResponse -> TencentResponse
-        register(cc.hongz.ztools.response.standard.AliResponse.class, cc.hongz.ztools.response.standard.TencentResponse.class,
+        register(AliResponse.class, TencentResponse.class,
                 ResponseConverter::aliToTencent);
 
         // TencentResponse -> AliResponse
-        register(cc.hongz.ztools.response.standard.TencentResponse.class, cc.hongz.ztools.response.standard.AliResponse.class,
+        register(TencentResponse.class, AliResponse.class,
                 ResponseConverter::tencentToAli);
 
         // BaiduResponse -> TencentResponse
-        register(cc.hongz.ztools.response.standard.BaiduResponse.class, cc.hongz.ztools.response.standard.TencentResponse.class,
+        register(BaiduResponse.class, TencentResponse.class,
                 ResponseConverter::baiduToTencent);
 
         // JsonResponse -> AjaxResult
-        register(cc.hongz.ztools.response.generic.JsonResponse.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(JsonResponse.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // MapResponse -> AjaxResult
-        register(cc.hongz.ztools.response.generic.MapResponse.class, cc.hongz.ztools.response.ajax.AjaxResult.class,
+        register(MapResponse.class, AjaxResult.class,
                 ResponseConverter::toAjaxResult);
 
         // AjaxResult -> JsonResponse
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.generic.JsonResponse.class,
+        register(AjaxResult.class, JsonResponse.class,
                 ResponseConverter::toJsonResponse);
 
         // AjaxResult -> MapResponse
-        register(cc.hongz.ztools.response.ajax.AjaxResult.class, cc.hongz.ztools.response.generic.MapResponse.class,
+        register(AjaxResult.class, MapResponse.class,
                 ResponseConverter::toMapResponse);
     }
 }

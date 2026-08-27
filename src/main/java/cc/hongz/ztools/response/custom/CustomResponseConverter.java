@@ -42,6 +42,7 @@ import cc.hongz.ztools.response.standard.TencentResponse;
  * @see CustomResponse
  * @see cc.hongz.ztools.response.ResponseConverterFactory
  */
+@SuppressWarnings("checkstyle:MagicNumber")
 public final class CustomResponseConverter {
 
     private CustomResponseConverter() {

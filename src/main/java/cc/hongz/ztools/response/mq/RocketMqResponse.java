@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.common.message.MessageExt;
+
 import java.util.Map;
 
 /**
@@ -71,7 +74,13 @@ public class RocketMqResponse<T> {
      * @param <T>        数据类型
      * @return RocketMqResponse
      */
-    public static <T> RocketMqResponse<T> success(final String msgId, final String topic, final String tag, final T body, final String sendStatus) {
+    public static <T> RocketMqResponse<T> success(
+            final String msgId,
+            final String topic,
+            final String tag,
+            final T body,
+            final String sendStatus
+        ) {
         return RocketMqResponse.<T>builder()
                 .msgId(msgId)
                 .topic(topic)
@@ -89,7 +98,10 @@ public class RocketMqResponse<T> {
      * @param <T>        数据类型
      * @return RocketMqResponse
      */
-    public static <T> RocketMqResponse<T> from(final org.apache.rocketmq.client.producer.SendResult sendResult, final T body) {
+    public static <T> RocketMqResponse<T> from(
+            final SendResult sendResult,
+            final T body
+        ) {
         return RocketMqResponse.<T>builder()
                 .msgId(sendResult.getMsgId())
                 .topic(sendResult.getMessageQueue().getTopic())
@@ -106,7 +118,10 @@ public class RocketMqResponse<T> {
      * @param <T>        数据类型
      * @return RocketMqResponse
      */
-    public static <T> RocketMqResponse<T> from(final org.apache.rocketmq.common.message.MessageExt messageExt, final T body) {
+    public static <T> RocketMqResponse<T> from(
+            final MessageExt messageExt,
+            final T body
+        ) {
         return RocketMqResponse.<T>builder()
                 .msgId(messageExt.getMsgId())
                 .topic(messageExt.getTopic())

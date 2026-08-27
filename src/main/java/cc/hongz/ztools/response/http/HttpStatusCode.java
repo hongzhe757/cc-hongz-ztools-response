@@ -13,6 +13,7 @@ package cc.hongz.ztools.response.http;
  * @see <a href="https://www.rfc-editor.org/rfc/rfc7235">RFC 7235</a>
  * @see <a href="https://www.rfc-editor.org/rfc/rfc7538">RFC 7538</a>
  */
+@SuppressWarnings("checkstyle:MagicNumber")
 public enum HttpStatusCode {
     
     // ==================== 1xx Informational ====================

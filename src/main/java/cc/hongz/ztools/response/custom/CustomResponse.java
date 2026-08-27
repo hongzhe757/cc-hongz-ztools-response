@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 自定义响应结构示例 - 演示如何扩展自定义返回格式.
+ * 自定义响应结构示例 - 演示如何扩展自定义返回格式。
  * <p>
  * 这是一个完整的自定义响应结构示例，展示了如何定义符合特定业务需求的响应格式。
  * 你可以根据实际需求修改字段名称、类型和结构。
@@ -46,12 +46,13 @@ import java.util.Map;
  */
 @Data
 @Accessors(chain = true)
+@SuppressWarnings("checkstyle:MagicNumber")
 public class CustomResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 状态码.
+     * 状态码。
      * <p>
      * 200=成功, 4xx=客户端错误, 5xx=服务器错误
      * </p>
@@ -59,7 +60,7 @@ public class CustomResponse<T> implements Serializable {
     private int code;
 
     /**
-     * 响应消息.
+     * 响应消息。
      * <p>
      * 可以是直接的文本消息，也可以是国际化 key
      * </p>
@@ -67,7 +68,7 @@ public class CustomResponse<T> implements Serializable {
     private String message;
 
     /**
-     * 响应数据.
+     * 响应数据。
      * <p>
      * 泛型支持任意数据类型
      * </p>
@@ -75,12 +76,12 @@ public class CustomResponse<T> implements Serializable {
     private T data;
 
     /**
-     * 时间戳（毫秒）.
+     * 时间戳（毫秒）。
      */
     private long timestamp;
 
     /**
-     * 链路追踪ID.
+     * 链路追踪ID。
      * <p>
      * 用于分布式系统中的请求追踪
      * </p>
@@ -88,43 +89,46 @@ public class CustomResponse<T> implements Serializable {
     private String traceId;
 
     /**
-     * 额外元数据.
+     * 额外元数据。
      * <p>
      * 存储额外的上下文信息，如分页信息、权限信息等
      * </p>
      */
     private Map<String, Object> metadata;
 
+    /**
+     * 默认构造，初始化时间戳和元数据。
+     */
     public CustomResponse() {
         this.timestamp = System.currentTimeMillis();
         this.metadata = new HashMap<>();
     }
 
     /**
-     * 创建成功响应.
+     * 创建成功响应。
      *
      * @param data 响应数据
      * @param <T>  数据类型
      * @return CustomResponse
      */
-    public static <T> CustomResponse<T> success(T data) {
+    public static <T> CustomResponse<T> success(final T data) {
         return success(200, "操作成功", data);
     }
 
     /**
-     * 创建成功响应（带消息）.
+     * 创建成功响应（带消息）。
      *
      * @param message 响应消息
      * @param data    响应数据
      * @param <T>     数据类型
      * @return CustomResponse
      */
-    public static <T> CustomResponse<T> success(String message, T data) {
+    public static <T> CustomResponse<T> success(final String message, final T data) {
         return success(200, message, data);
     }
 
     /**
-     * 创建成功响应（完整参数）.
+     * 创建成功响应（完整参数）。
      *
      * @param code    状态码
      * @param message 响应消息
@@ -132,7 +136,7 @@ public class CustomResponse<T> implements Serializable {
      * @param <T>     数据类型
      * @return CustomResponse
      */
-    public static <T> CustomResponse<T> success(int code, String message, T data) {
+    public static <T> CustomResponse<T> success(final int code, final String message, final T data) {
         CustomResponse<T> response = new CustomResponse<>();
         response.setCode(code);
         response.setMessage(message);
@@ -141,19 +145,19 @@ public class CustomResponse<T> implements Serializable {
     }
 
     /**
-     * 创建失败响应.
+     * 创建失败响应。
      *
      * @param code    错误码
      * @param message 错误消息
      * @param <T>     数据类型
      * @return CustomResponse
      */
-    public static <T> CustomResponse<T> error(int code, String message) {
+    public static <T> CustomResponse<T> error(final int code, final String message) {
         return error(code, message, null);
     }
 
     /**
-     * 创建失败响应（带数据）.
+     * 创建失败响应（带数据）。
      *
      * @param code    错误码
      * @param message 错误消息
@@ -161,7 +165,7 @@ public class CustomResponse<T> implements Serializable {
      * @param <T>     数据类型
      * @return CustomResponse
      */
-    public static <T> CustomResponse<T> error(int code, String message, T data) {
+    public static <T> CustomResponse<T> error(final int code, final String message, final T data) {
         CustomResponse<T> response = new CustomResponse<>();
         response.setCode(code);
         response.setMessage(message);
@@ -170,7 +174,7 @@ public class CustomResponse<T> implements Serializable {
     }
 
     /**
-     * 判断是否成功.
+     * 判断是否成功。
      *
      * @return 如果 code == 200 则返回 true
      */
@@ -179,13 +183,13 @@ public class CustomResponse<T> implements Serializable {
     }
 
     /**
-     * 添加元数据.
+     * 添加元数据。
      *
      * @param key   键
      * @param value 值
      * @return this（支持链式调用）
      */
-    public CustomResponse<T> addMetadata(String key, Object value) {
+    public CustomResponse<T> addMetadata(final String key, final Object value) {
         if (this.metadata == null) {
             this.metadata = new HashMap<>();
         }
@@ -194,14 +198,14 @@ public class CustomResponse<T> implements Serializable {
     }
 
     /**
-     * 获取元数据.
+     * 获取元数据。
      *
      * @param key 键
      * @param <V> 值类型
      * @return 元数据值
      */
     @SuppressWarnings("unchecked")
-    public <V> V getMetadata(String key) {
+    public <V> V getMetadata(final String key) {
         if (this.metadata == null) {
             return null;
         }
@@ -209,7 +213,7 @@ public class CustomResponse<T> implements Serializable {
     }
 
     /**
-     * 创建构建器.
+     * 创建构建器。
      *
      * @param <T> 数据类型
      * @return Builder
@@ -219,42 +223,81 @@ public class CustomResponse<T> implements Serializable {
     }
 
     /**
-     * 构建器类.
+     * 构建器类。
      *
      * @param <T> 数据类型
      */
     public static class Builder<T> {
         private final CustomResponse<T> response;
 
+        /**
+         * 默认构造。
+         */
         public Builder() {
             this.response = new CustomResponse<>();
         }
 
-        public Builder<T> code(int code) {
+        /**
+         * 设置状态码。
+         *
+         * @param code 状态码
+         * @return this
+         */
+        public Builder<T> code(final int code) {
             this.response.setCode(code);
             return this;
         }
 
-        public Builder<T> message(String message) {
+        /**
+         * 设置响应消息。
+         *
+         * @param message 消息
+         * @return this
+         */
+        public Builder<T> message(final String message) {
             this.response.setMessage(message);
             return this;
         }
 
-        public Builder<T> data(T data) {
+        /**
+         * 设置响应数据。
+         *
+         * @param data 数据
+         * @return this
+         */
+        public Builder<T> data(final T data) {
             this.response.setData(data);
             return this;
         }
 
-        public Builder<T> traceId(String traceId) {
+        /**
+         * 设置链路追踪ID。
+         *
+         * @param traceId 追踪ID
+         * @return this
+         */
+        public Builder<T> traceId(final String traceId) {
             this.response.setTraceId(traceId);
             return this;
         }
 
-        public Builder<T> metadata(String key, Object value) {
+        /**
+         * 添加元数据。
+         *
+         * @param key   键
+         * @param value 值
+         * @return this
+         */
+        public Builder<T> metadata(final String key, final Object value) {
             this.response.addMetadata(key, value);
             return this;
         }
 
+        /**
+         * 构建响应对象。
+         *
+         * @return CustomResponse
+         */
         public CustomResponse<T> build() {
             return this.response;
         }

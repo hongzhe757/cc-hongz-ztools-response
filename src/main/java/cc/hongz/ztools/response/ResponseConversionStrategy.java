@@ -67,7 +67,10 @@ public interface ResponseConversionStrategy<S, T> {
      * @param <V>   中间类型
      * @return 组合后的策略
      */
-    default <V> ResponseConversionStrategy<S, V> andThen(final ResponseConversionStrategy<? super T, ? extends V> after) {
+    default <V> ResponseConversionStrategy<S, V> andThen(
+            final ResponseConversionStrategy<? super T,
+            ? extends V> after
+        ) {
         if (after == null) {
             throw new IllegalArgumentException("后续策略不能为空");
         }

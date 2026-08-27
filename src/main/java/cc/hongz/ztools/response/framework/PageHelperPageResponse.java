@@ -88,7 +88,13 @@ public class PageHelperPageResponse<T> {
      * @param <T>      数据类型
      * @return PageHelperPageResponse
      */
-    public static <T> PageHelperPageResponse<T> of(final long total, final int pageSize, final int pageNum, final int pages, final List<T> list) {
+    public static <T> PageHelperPageResponse<T> of(
+            final long total,
+            final int pageSize,
+            final int pageNum,
+            final int pages,
+            final List<T> list
+        ) {
         return PageHelperPageResponse.<T>builder()
                 .total(total)
                 .pageSize(pageSize)

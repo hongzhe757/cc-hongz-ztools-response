@@ -72,7 +72,12 @@ public class OAuth2TokenResponse {
      * @param refreshToken 刷新令牌
      * @return OAuth2TokenResponse
      */
-    public static OAuth2TokenResponse withRefresh(final String accessToken, final String tokenType, final Long expiresIn, final String refreshToken) {
+    public static OAuth2TokenResponse withRefresh(
+            final String accessToken,
+            final String tokenType,
+            final Long expiresIn,
+            final String refreshToken
+        ) {
         return OAuth2TokenResponse.builder()
                 .accessToken(accessToken)
                 .tokenType(tokenType)
@@ -91,7 +96,13 @@ public class OAuth2TokenResponse {
      * @param scope        作用域
      * @return OAuth2TokenResponse
      */
-    public static OAuth2TokenResponse full(final String accessToken, final String tokenType, final Long expiresIn, final String refreshToken, final String scope) {
+    public static OAuth2TokenResponse full(
+            final String accessToken,
+            final String tokenType,
+            final Long expiresIn,
+            final String refreshToken,
+            final String scope
+        ) {
         return OAuth2TokenResponse.builder()
                 .accessToken(accessToken)
                 .tokenType(tokenType)

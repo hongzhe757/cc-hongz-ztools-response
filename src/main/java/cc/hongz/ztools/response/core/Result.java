@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("checkstyle:MagicNumber")
 public class Result<T> {
 
     /**

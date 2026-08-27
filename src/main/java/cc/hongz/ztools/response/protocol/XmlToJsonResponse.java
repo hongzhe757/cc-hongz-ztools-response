@@ -74,7 +74,12 @@ public class XmlToJsonResponse<T> {
      * @param <T>         数据类型
      * @return XmlToJsonResponse
      */
-    public static <T> XmlToJsonResponse<T> withAttributes(final String rootElement, final T data, final Map<String, String> attributes) {
+    public static <T> XmlToJsonResponse<T> withAttributes(
+            final String rootElement,
+            final T data,
+            final Map<String,
+            String> attributes
+        ) {
         return XmlToJsonResponse.<T>builder()
                 .rootElement(rootElement)
                 .data(data)
@@ -93,7 +98,15 @@ public class XmlToJsonResponse<T> {
      * @param <T>         数据类型
      * @return XmlToJsonResponse
      */
-    public static <T> XmlToJsonResponse<T> full(final String rootElement, final T data, final Map<String, String> attributes, final Map<String, String> namespaces, final String originalXml) {
+    public static <T> XmlToJsonResponse<T> full(
+            final String rootElement,
+            final T data,
+            final Map<String,
+            String> attributes,
+            final Map<String,
+            String> namespaces,
+            final String originalXml
+        ) {
         return XmlToJsonResponse.<T>builder()
                 .rootElement(rootElement)
                 .data(data)

@@ -22,6 +22,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("checkstyle:MagicNumber")
 public class OkHttpResponseWrapper<T> {
 
     /**
@@ -66,7 +67,13 @@ public class OkHttpResponseWrapper<T> {
      * @param <T>     响应体类型
      * @return OkHttpResponseWrapper
      */
-    public static <T> OkHttpResponseWrapper<T> success(final int code, final String message, final T body, final Map<String, List<String>> headers) {
+    public static <T> OkHttpResponseWrapper<T> success(
+            final int code,
+            final String message,
+            final T body,
+            final Map<String,
+            List<String>> headers
+        ) {
         return OkHttpResponseWrapper.<T>builder()
                 .code(code)
                 .message(message)

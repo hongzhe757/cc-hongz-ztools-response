@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.apache.http.HttpResponse;
+
 import java.util.List;
 import java.util.Map;
 
 /**
  * Apache HttpClient 响应包装类.
  * <p>
- * 将 Apache HttpClient {@link org.apache.http.HttpResponse} 转换为统一的 JSON 格式。
+ * 将 Apache HttpClient {@link HttpResponse} 转换为统一的 JSON 格式。
  * </p>
  *
  * @param <T> 响应体类型
@@ -22,6 +24,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("checkstyle:MagicNumber")
 public class ApacheHttpResponseWrapper<T> {
 
     /**
@@ -66,7 +69,13 @@ public class ApacheHttpResponseWrapper<T> {
      * @param <T>          响应体类型
      * @return ApacheHttpResponseWrapper
      */
-    public static <T> ApacheHttpResponseWrapper<T> success(final int statusCode, final String reasonPhrase, final T body, final Map<String, List<String>> headers) {
+    public static <T> ApacheHttpResponseWrapper<T> success(
+            final int statusCode,
+            final String reasonPhrase,
+            final T body,
+            final Map<String,
+            List<String>> headers
+        ) {
         return ApacheHttpResponseWrapper.<T>builder()
                 .statusCode(statusCode)
                 .reasonPhrase(reasonPhrase)
@@ -85,14 +94,20 @@ public class ApacheHttpResponseWrapper<T> {
      * @param <T>      响应体类型
      * @return ApacheHttpResponseWrapper
      */
-    public static <T> ApacheHttpResponseWrapper<T> from(final org.apache.http.HttpResponse response, final T body, final Map<String, List<String>> headers) {
+    public static <T> ApacheHttpResponseWrapper<T> from(
+            final HttpResponse response,
+            final T body,
+            final Map<String,
+            List<String>> headers
+        ) {
         return ApacheHttpResponseWrapper.<T>builder()
                 .statusCode(response.getStatusLine().getStatusCode())
                 .reasonPhrase(response.getStatusLine().getReasonPhrase())
                 .body(body)
                 .headers(headers)
                 .protocolVersion(response.getStatusLine().getProtocolVersion().toString())
-                .successful(response.getStatusLine().getStatusCode() >= 200 && response.getStatusLine().getStatusCode() < 300)
+                .successful(response.getStatusLine().getStatusCode() >= 200
+                        && response.getStatusLine().getStatusCode() < 300)
                 .build();
     }
 

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import feign.Response;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,7 +16,7 @@ import java.util.Map;
 /**
  * Feign Client 响应包装类.
  * <p>
- * 将 Feign {@link feign.Response} 转换为统一的 JSON 格式。
+ * 将 Feign {@link Response} 转换为统一的 JSON 格式。
  * </p>
  *
  * @param <T> 响应体类型
@@ -25,6 +27,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("checkstyle:MagicNumber")
 public class FeignResponseWrapper<T> {
 
     /**
@@ -64,7 +67,13 @@ public class FeignResponseWrapper<T> {
      * @param <T>     响应体类型
      * @return FeignResponseWrapper
      */
-    public static <T> FeignResponseWrapper<T> success(final int status, final String reason, final T body, final Map<String, List<String>> headers) {
+    public static <T> FeignResponseWrapper<T> success(
+            final int status,
+            final String reason,
+            final T body,
+            final Map<String,
+            List<String>> headers
+        ) {
         return FeignResponseWrapper.<T>builder()
                 .status(status)
                 .reason(reason)
@@ -82,7 +91,7 @@ public class FeignResponseWrapper<T> {
      * @param <T>      响应体类型
      * @return FeignResponseWrapper
      */
-    public static <T> FeignResponseWrapper<T> from(final feign.Response response, final T body) {
+    public static <T> FeignResponseWrapper<T> from(final Response response, final T body) {
         // 转换 headers 类型：Collection -> List
         Map<String, List<String>> convertedHeaders = new HashMap<>();
         if (response.headers() != null) {

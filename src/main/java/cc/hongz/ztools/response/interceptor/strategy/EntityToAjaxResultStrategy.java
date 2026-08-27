@@ -2,7 +2,6 @@ package cc.hongz.ztools.response.interceptor.strategy;
 
 import cc.hongz.ztools.response.ajax.AjaxResult;
 import cc.hongz.ztools.response.custom.CustomResponse;
-import cc.hongz.ztools.response.custom.CustomResponseConverter;
 import cc.hongz.ztools.response.interceptor.InterceptorProperties;
 import cc.hongz.ztools.response.interceptor.ResponseInterceptStrategy;
 import cc.hongz.ztools.response.interceptor.ResponseInterceptSupport;
