@@ -28,8 +28,8 @@ class AjaxResultTest {
         assertTrue(result.isSuccess());
         assertEquals("200", result.getCode());
         assertEquals("操作成功", result.getMsg());
-        // data 为 null 时会被替换为 new Object()
-        assertNotNull(result.getData());
+        // data 为 null 时保持 null（泛型化后不再用 new Object() 占位）
+        assertNull(result.getData());
     }
 
     @Test
@@ -41,7 +41,7 @@ class AjaxResultTest {
         assertTrue(result.isSuccess());
         assertEquals("200", result.getCode());
         assertEquals(msg, result.getMsg());
-        assertNotNull(result.getData());
+        assertNull(result.getData());
     }
 
     @Test
@@ -88,13 +88,12 @@ class AjaxResultTest {
     }
 
     @Test
-    @DisplayName("success(code, msg, null) - null 数据被替换")
+    @DisplayName("success(code, msg, null) - null 数据保持 null")
     void testSuccess_NullDataReplaced() {
         AjaxResult result = AjaxResult.success("200", "成功", null);
-        
+
         assertTrue(result.isSuccess());
-        assertNotNull(result.getData());
-        assertNotEquals(null, result.getData());
+        assertNull(result.getData());
     }
 
     // ==================== 失败响应测试 ====================
@@ -108,7 +107,7 @@ class AjaxResultTest {
         assertFalse(result.isSuccess());
         assertEquals("500", result.getCode());
         assertEquals("操作失败", result.getMsg());
-        assertNotNull(result.getData());
+        assertNull(result.getData());
     }
 
     @Test
