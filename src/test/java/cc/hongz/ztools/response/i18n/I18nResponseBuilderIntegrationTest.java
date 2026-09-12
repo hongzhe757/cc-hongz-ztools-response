@@ -1,7 +1,7 @@
 package cc.hongz.ztools.response.i18n;
 
 import cc.hongz.ztools.response.ajax.AjaxResult;
-import cc.hongz.ztools.response.ajax.AjaxStatusEnum;
+import cc.hongz.ztools.status.AjaxStatusEnum;
 import cc.hongz.ztools.response.exception.BusinessException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

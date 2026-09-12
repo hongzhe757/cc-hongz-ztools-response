@@ -1,6 +1,7 @@
 package cc.hongz.ztools.response.ajax;
 
-import cc.hongz.ztools.response.http.HttpStatusCode;
+import cc.hongz.ztools.status.AjaxStatusInterface;
+import cc.hongz.ztools.status.HttpStatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

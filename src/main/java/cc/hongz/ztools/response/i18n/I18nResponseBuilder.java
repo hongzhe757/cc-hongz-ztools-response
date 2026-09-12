@@ -1,8 +1,8 @@
 package cc.hongz.ztools.response.i18n;
 
 import cc.hongz.ztools.response.ajax.AjaxResult;
-import cc.hongz.ztools.response.ajax.AjaxStatusInterface;
-import cc.hongz.ztools.response.ajax.AjaxStatusMessageKeys;
+import cc.hongz.ztools.status.AjaxStatusInterface;
+import cc.hongz.ztools.status.AjaxStatusMessageKeys;
 import cc.hongz.ztools.response.exception.BusinessException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;

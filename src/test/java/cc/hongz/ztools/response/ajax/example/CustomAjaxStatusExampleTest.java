@@ -1,10 +1,11 @@
 package cc.hongz.ztools.response.ajax.example;
 
-import cc.hongz.ztools.response.ajax.AjaxStatusInterface;
-import cc.hongz.ztools.response.ajax.AjaxStatusRegistry;
-import cc.hongz.ztools.response.ajax.AjaxStatuses;
+import cc.hongz.ztools.status.AjaxStatusInterface;
+import cc.hongz.ztools.status.AjaxStatusRegistry;
+import cc.hongz.ztools.status.AjaxStatuses;
+import cc.hongz.ztools.status.example.UserAjaxStatus;
 import cc.hongz.ztools.response.ajax.AjaxResult;
-import cc.hongz.ztools.response.http.HttpStatusCode;
+import cc.hongz.ztools.status.HttpStatusCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

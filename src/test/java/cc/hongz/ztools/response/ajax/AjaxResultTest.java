@@ -1,6 +1,7 @@
 package cc.hongz.ztools.response.ajax;
 
-import cc.hongz.ztools.response.http.HttpStatusCode;
+import cc.hongz.ztools.status.AjaxStatusEnum;
+import cc.hongz.ztools.status.HttpStatusCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package cc.hongz.ztools.response.standard;
 
-import cc.hongz.ztools.response.http.HttpStatusCode;
+import cc.hongz.ztools.status.HttpStatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
