@@ -1,7 +1,7 @@
 package cc.hongz.ztools.response.i18n;
 
 import cc.hongz.ztools.response.ajax.AjaxResult;
-import cc.hongz.ztools.response.ajax.AjaxStatusEnum;
+import cc.hongz.ztools.status.AjaxStatusEnum;
 import cc.hongz.ztools.response.exception.BusinessException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * {@link I18nResponseBuilder} 与 classpath 消息资源、Locale 切换的集成测试.
@@ -38,18 +38,18 @@ class I18nResponseBuilderIntegrationTest {
     }
 
     @Test
-    @DisplayName("LocaleContextHolder 中文 - common.param.invalid 语义键")
+    @DisplayName("LocaleContextHolder 中文 - COMMON_400 语义键")
     void testSemanticKeyChineseViaLocaleContext() {
         LocaleContextHolder.setLocale(Locale.SIMPLIFIED_CHINESE);
-        String message = builder.getMessage("common.param.invalid", "参数无效：{0}", "email");
+        String message = builder.getMessage("COMMON_400", "参数无效：{0}", "email");
         assertEquals("参数无效：email", message);
     }
 
     @Test
-    @DisplayName("LocaleContextHolder 英文 - common.param.invalid 语义键")
+    @DisplayName("LocaleContextHolder 英文 - COMMON_400 语义键")
     void testSemanticKeyEnglishViaLocaleContext() {
         LocaleContextHolder.setLocale(Locale.US);
-        String message = builder.getMessage("common.param.invalid", "Invalid parameter: {0}", "email");
+        String message = builder.getMessage("COMMON_400", "Invalid parameter: {0}", "email");
         assertEquals("Invalid parameter: email", message);
     }
 
@@ -63,7 +63,7 @@ class I18nResponseBuilderIntegrationTest {
     }
 
     @Test
-    @DisplayName("英文 Locale - AjaxStatusEnum.NOT_FOUND 命中 common.not.found")
+    @DisplayName("英文 Locale - AjaxStatusEnum.NOT_FOUND 命中 COMMON_404")
     void testNotFoundEnglishLocale() {
         LocaleContextHolder.setLocale(Locale.US);
         AjaxResult result = builder.error(AjaxStatusEnum.NOT_FOUND);
@@ -100,15 +100,15 @@ class I18nResponseBuilderIntegrationTest {
     }
 
     @Test
-    @DisplayName("getMessage - common.param.invalid 中英文切换")
+    @DisplayName("getMessage - COMMON_400 中英文切换")
     void testParamInvalidLocaleSwitch() {
         LocaleContextHolder.setLocale(Locale.SIMPLIFIED_CHINESE);
         assertEquals("参数无效：email", builder.getMessage(
-                "common.param.invalid", "参数无效：{0}", "email"));
+                "COMMON_400", "参数无效：{0}", "email"));
 
         LocaleContextHolder.setLocale(Locale.US);
         assertEquals("Invalid parameter: email", builder.getMessage(
-                "common.param.invalid", "Invalid parameter: {0}", "email"));
+                "COMMON_400", "Invalid parameter: {0}", "email"));
     }
 
     @Test

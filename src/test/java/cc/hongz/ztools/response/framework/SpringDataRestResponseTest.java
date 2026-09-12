@@ -9,7 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * SpringDataRestResponse 单元测试.
@@ -48,7 +52,7 @@ class SpringDataRestResponseTest {
 
     @Test
     @DisplayName("ofResource() 带模板链接")
-    void testOfResource_WithTemplatedLink() {
+    void testOfResourceWithTemplatedLink() {
         // Given
         Map<String, SpringDataRestResponse.Link> links = new HashMap<>();
         links.put("search", new SpringDataRestResponse.Link("/api/users{?name}", true));
@@ -84,7 +88,7 @@ class SpringDataRestResponseTest {
 
     @Test
     @DisplayName("ofCollection() 空列表")
-    void testOfCollection_Empty() {
+    void testOfCollectionEmpty() {
         // When
         SpringDataRestResponse<String> response = SpringDataRestResponse.ofCollection(
                 Collections.emptyList(), Collections.emptyMap()

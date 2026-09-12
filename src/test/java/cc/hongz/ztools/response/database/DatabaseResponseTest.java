@@ -7,7 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 数据库响应测试类.
@@ -24,7 +28,7 @@ class DatabaseResponseTest {
 
     @Test
     @DisplayName("Redis GET 操作 - 键存在")
-    void testRedisGet_Exists() {
+    void testRedisGetExists() {
         RedisResponse<String> response = RedisResponse.get("user:123", "张三");
 
         assertTrue(response.isSuccess());
@@ -36,7 +40,7 @@ class DatabaseResponseTest {
 
     @Test
     @DisplayName("Redis GET 操作 - 键不存在")
-    void testRedisGet_NotExists() {
+    void testRedisGetNotExists() {
         RedisResponse<Object> response = RedisResponse.get("nonexistent", null);
 
         // get() 方法总是返回 success=true，但 exists() 检查 value 是否为 null

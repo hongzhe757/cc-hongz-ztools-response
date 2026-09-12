@@ -7,7 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * CustomResponse 转换器单元测试.
@@ -29,7 +33,7 @@ class CustomResponseConverterTest {
 
     @Test
     @DisplayName("AjaxResult → CustomResponse 转换成功")
-    void testFromAjaxResult_Success() {
+    void testFromAjaxResultSuccess() {
         // Given
         AjaxResult ajax = AjaxResult.success("200", "操作成功", "test data");
 
@@ -48,7 +52,7 @@ class CustomResponseConverterTest {
 
     @Test
     @DisplayName("AjaxResult → CustomResponse 转换失败")
-    void testFromAjaxResult_Error() {
+    void testFromAjaxResultError() {
         // Given: 使用三参数版本明确指定 code=404
         AjaxResult ajax = AjaxResult.error("404", "用户不存在", null);
 
@@ -64,7 +68,7 @@ class CustomResponseConverterTest {
 
     @Test
     @DisplayName("AjaxResult 为空时返回错误响应")
-    void testFromAjaxResult_Null() {
+    void testFromAjaxResultNull() {
         // When
         CustomResponse<Object> custom = CustomResponseConverter.fromAjaxResult(null);
 
@@ -76,7 +80,7 @@ class CustomResponseConverterTest {
 
     @Test
     @DisplayName("Result → CustomResponse 转换成功")
-    void testFromResult_Success() {
+    void testFromResultSuccess() {
         // Given
         Result<String> result = Result.success(200, "查询成功", "data");
 
@@ -93,7 +97,7 @@ class CustomResponseConverterTest {
 
     @Test
     @DisplayName("Result → CustomResponse 转换失败")
-    void testFromResult_Failure() {
+    void testFromResultFailure() {
         // Given
         Result<Void> result = Result.failure(500, "服务器错误");
 
@@ -109,7 +113,7 @@ class CustomResponseConverterTest {
 
     @Test
     @DisplayName("CustomResponse → AjaxResult 转换成功")
-    void testToAjaxResult_Success() {
+    void testToAjaxResultSuccess() {
         // Given
         CustomResponse<String> custom = CustomResponse.success("test data");
 
@@ -126,7 +130,7 @@ class CustomResponseConverterTest {
 
     @Test
     @DisplayName("CustomResponse → AjaxResult 转换失败")
-    void testToAjaxResult_Error() {
+    void testToAjaxResultError() {
         // Given
         CustomResponse<Void> custom = CustomResponse.error(404, "资源未找到");
 

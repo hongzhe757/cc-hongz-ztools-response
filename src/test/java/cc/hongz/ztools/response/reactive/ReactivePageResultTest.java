@@ -7,7 +7,10 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * ReactivePageResult 单元测试.
@@ -25,7 +28,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("success(Flux, Mono<Long>, current, size) 创建分页响应")
-    void testSuccess_WithMonoTotal() {
+    void testSuccessWithMonoTotal() {
         // Given
         Flux<String> records = Flux.just("a", "b", "c");
         Mono<Long> total = Mono.just(100L);
@@ -48,7 +51,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("success(Flux, Long, current, size) 带固定总数的分页响应")
-    void testSuccess_WithFixedTotal() {
+    void testSuccessWithFixedTotal() {
         // Given
         Flux<Integer> records = Flux.just(1, 2, 3, 4, 5);
 
@@ -66,7 +69,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("success() 总页数向上取整")
-    void testSuccess_PagesCeiling() {
+    void testSuccessPagesCeiling() {
         // Given: 55条记录，每页10条 → 6页
         Flux<String> records = Flux.empty();
 
@@ -100,14 +103,14 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("isSuccess() code=200 返回 true")
-    void testIsSuccess_Code200() {
+    void testIsSuccessCode200() {
         ReactivePageResult<Object> result = ReactivePageResult.success(Flux.empty(), 0L, 1, 10);
         assertTrue(result.isSuccess());
     }
 
     @Test
     @DisplayName("isSuccess() code=0 返回 true")
-    void testIsSuccess_Code0() {
+    void testIsSuccessCode0() {
         ReactivePageResult<Object> result = new ReactivePageResult<>();
         result.setCode("0");
         assertTrue(result.isSuccess());
@@ -115,7 +118,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("isSuccess() code=SUCCESS 大小写不敏感")
-    void testIsSuccess_CodeSuccessIgnoreCase() {
+    void testIsSuccessCodeSuccessIgnoreCase() {
         ReactivePageResult<Object> result = new ReactivePageResult<>();
         result.setCode("SUCCESS");
         assertTrue(result.isSuccess());
@@ -123,7 +126,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("isSuccess() code=404 返回 false")
-    void testIsSuccess_Code404() {
+    void testIsSuccessCode404() {
         ReactivePageResult<Object> result = ReactivePageResult.error("404", "not found");
         assertFalse(result.isSuccess());
     }
@@ -132,7 +135,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("hasNext() 有下一页返回 true")
-    void testHasNext_True() {
+    void testHasNextTrue() {
         // Given: 当前第1页，共5页
         ReactivePageResult<String> result = ReactivePageResult.success(Flux.empty(), 50L, 1, 10);
 
@@ -142,7 +145,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("hasNext() 最后一页返回 false")
-    void testHasNext_False_LastPage() {
+    void testHasNextFalseLastPage() {
         // Given: 当前第5页，共5页
         ReactivePageResult<String> result = ReactivePageResult.success(Flux.empty(), 50L, 5, 10);
 
@@ -152,7 +155,7 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("hasNext() current=null 返回 false")
-    void testHasNext_NullCurrent() {
+    void testHasNextNullCurrent() {
         // Given
         ReactivePageResult<String> result = new ReactivePageResult<>();
         result.setCode("200");
@@ -167,21 +170,21 @@ class ReactivePageResultTest {
 
     @Test
     @DisplayName("hasPrevious() 第一页返回 false")
-    void testHasPrevious_FirstPage() {
+    void testHasPreviousFirstPage() {
         ReactivePageResult<String> result = ReactivePageResult.success(Flux.empty(), 50L, 1, 10);
         assertFalse(result.hasPrevious());
     }
 
     @Test
     @DisplayName("hasPrevious() 第二页返回 true")
-    void testHasPrevious_SecondPage() {
+    void testHasPreviousSecondPage() {
         ReactivePageResult<String> result = ReactivePageResult.success(Flux.empty(), 50L, 2, 10);
         assertTrue(result.hasPrevious());
     }
 
     @Test
     @DisplayName("hasPrevious() current=null 返回 false")
-    void testHasPrevious_NullCurrent() {
+    void testHasPreviousNullCurrent() {
         ReactivePageResult<String> result = new ReactivePageResult<>();
         result.setCurrent(null);
         assertFalse(result.hasPrevious());

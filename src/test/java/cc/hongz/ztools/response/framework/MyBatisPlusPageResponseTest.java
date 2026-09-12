@@ -8,7 +8,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * MyBatisPlusPageResponse 单元测试.
@@ -48,7 +51,7 @@ class MyBatisPlusPageResponseTest {
 
     @Test
     @DisplayName("of() 空记录列表")
-    void testOf_EmptyRecords() {
+    void testOfEmptyRecords() {
         // When
         MyBatisPlusPageResponse<String> response = MyBatisPlusPageResponse.of(
                 0L, 10L, 1L, 0L, Collections.emptyList()
@@ -61,7 +64,7 @@ class MyBatisPlusPageResponseTest {
 
     @Test
     @DisplayName("of() null 记录列表")
-    void testOf_NullRecords() {
+    void testOfNullRecords() {
         // When
         MyBatisPlusPageResponse<String> response = MyBatisPlusPageResponse.of(
                 0L, 10L, 1L, 0L, null
@@ -95,7 +98,7 @@ class MyBatisPlusPageResponseTest {
 
     @Test
     @DisplayName("toDataListInfo() 空数据转换")
-    void testToDataListInfo_Empty() {
+    void testToDataListInfoEmpty() {
         // Given
         MyBatisPlusPageResponse<String> response = MyBatisPlusPageResponse.of(
                 0L, 10L, 1L, 0L, Collections.emptyList()

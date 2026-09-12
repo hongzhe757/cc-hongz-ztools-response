@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * framework 包响应类的单元测试.
@@ -23,7 +27,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse.up() - 创建 UP 状态响应")
-    void testActuatorHealthResponse_Up() {
+    void testActuatorHealthResponseUp() {
         ActuatorHealthResponse response = ActuatorHealthResponse.up();
 
         assertNotNull(response);
@@ -34,7 +38,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse.down() - 创建 DOWN 状态响应")
-    void testActuatorHealthResponse_Down() {
+    void testActuatorHealthResponseDown() {
         ActuatorHealthResponse response = ActuatorHealthResponse.down();
 
         assertEquals("DOWN", response.getStatus());
@@ -43,7 +47,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse.of(status, components) - 带组件状态的响应")
-    void testActuatorHealthResponse_Of() {
+    void testActuatorHealthResponseOf() {
         ActuatorHealthResponse.ComponentHealth dbHealth = new ActuatorHealthResponse.ComponentHealth(
                 "UP",
                 Map.of("database", "MySQL", "connectionTime", 5)
@@ -70,7 +74,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse.isHealthy() - 判断是否健康")
-    void testActuatorHealthResponse_IsHealthy() {
+    void testActuatorHealthResponseIsHealthy() {
         assertTrue(ActuatorHealthResponse.up().isHealthy());
         assertFalse(ActuatorHealthResponse.down().isHealthy());
 
@@ -84,7 +88,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse.ComponentHealth - 组件健康信息")
-    void testActuatorHealthResponse_ComponentHealth() {
+    void testActuatorHealthResponseComponentHealth() {
         Map<String, Object> details = Map.of(
                 "version", "8.0.30",
                 "validationQuery", "SELECT 1"
@@ -99,7 +103,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse Builder 模式")
-    void testActuatorHealthResponse_Builder() {
+    void testActuatorHealthResponseBuilder() {
         ActuatorHealthResponse response = ActuatorHealthResponse.builder()
                 .status("OUT_OF_SERVICE")
                 .components(Map.of())
@@ -112,7 +116,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse Getter/Setter")
-    void testActuatorHealthResponse_GettersSetters() {
+    void testActuatorHealthResponseGettersSetters() {
         ActuatorHealthResponse response = new ActuatorHealthResponse();
         response.setStatus("UP");
         response.setComponents(Map.of("test", new ActuatorHealthResponse.ComponentHealth("UP", null)));
@@ -125,7 +129,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("OAuth2TokenResponse.success(...) - 创建成功令牌响应")
-    void testOAuth2TokenResponse_Success() {
+    void testOAuth2TokenResponseSuccess() {
         String accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
         String tokenType = "Bearer";
         Long expiresIn = 3600L;
@@ -143,7 +147,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("OAuth2TokenResponse.withRefresh(...) - 带刷新令牌的响应")
-    void testOAuth2TokenResponse_WithRefresh() {
+    void testOAuth2TokenResponseWithRefresh() {
         String accessToken = "access_token_123";
         String tokenType = "Bearer";
         Long expiresIn = 7200L;
@@ -158,7 +162,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("OAuth2TokenResponse.full(...) - 完整令牌响应")
-    void testOAuth2TokenResponse_Full() {
+    void testOAuth2TokenResponseFull() {
         String accessToken = "access_token";
         String tokenType = "Bearer";
         Long expiresIn = 3600L;
@@ -177,7 +181,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("OAuth2TokenResponse.hasRefreshToken() - 判断是否有刷新令牌")
-    void testOAuth2TokenResponse_HasRefreshToken() {
+    void testOAuth2TokenResponseHasRefreshToken() {
         OAuth2TokenResponse resp1 = OAuth2TokenResponse.success("token", "Bearer", 3600L);
         assertFalse(resp1.hasRefreshToken());
 
@@ -201,7 +205,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("OAuth2TokenResponse Builder 模式")
-    void testOAuth2TokenResponse_Builder() {
+    void testOAuth2TokenResponseBuilder() {
         OAuth2TokenResponse response = OAuth2TokenResponse.builder()
                 .accessToken("custom_token")
                 .tokenType("MAC")
@@ -219,7 +223,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("OAuth2TokenResponse Getter/Setter")
-    void testOAuth2TokenResponse_GettersSetters() {
+    void testOAuth2TokenResponseGettersSetters() {
         OAuth2TokenResponse response = new OAuth2TokenResponse();
         response.setAccessToken("at_123");
         response.setTokenType("Bearer");
@@ -238,7 +242,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("OAuth2TokenResponse - 过期时间为 null")
-    void testOAuth2TokenResponse_NullExpiresIn() {
+    void testOAuth2TokenResponseNullExpiresIn() {
         OAuth2TokenResponse response = OAuth2TokenResponse.success("token", "Bearer", null);
 
         assertEquals("token", response.getAccessToken());
@@ -247,7 +251,7 @@ class FrameworkResponseTest {
 
     @Test
     @DisplayName("ActuatorHealthResponse - 空组件映射")
-    void testActuatorHealthResponse_EmptyComponents() {
+    void testActuatorHealthResponseEmptyComponents() {
         ActuatorHealthResponse response = ActuatorHealthResponse.of("UP", Map.of());
 
         assertEquals("UP", response.getStatus());

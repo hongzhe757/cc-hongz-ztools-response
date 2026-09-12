@@ -1,6 +1,7 @@
 package cc.hongz.ztools.response.ajax;
 
-import cc.hongz.ztools.response.http.HttpStatusCode;
+import cc.hongz.ztools.status.AjaxStatusInterface;
+import cc.hongz.ztools.status.HttpStatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -334,6 +335,6 @@ public class AjaxResult<T> {
      * @return 成功返回 true
      */
     public boolean isSuccess() {
-        return "200".equals(code) || "0".equals(code) || "success".equalsIgnoreCase(code);
+        return "200".equals(code) || "0".equals(code) || "success".equalsIgnoreCase(code) || "2000".equals(code);
     }
 }

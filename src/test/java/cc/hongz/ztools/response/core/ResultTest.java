@@ -5,7 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link Result} 原生响应结果的单元测试.
@@ -23,7 +28,7 @@ class ResultTest {
 
     @Test
     @DisplayName("success() - 无数据")
-    void testSuccess_NoData() {
+    void testSuccessNoData() {
         // When
         Result<Void> result = Result.success();
 
@@ -37,7 +42,7 @@ class ResultTest {
 
     @Test
     @DisplayName("success(data) - 带数据")
-    void testSuccess_WithData() {
+    void testSuccessWithData() {
         // Given
         String data = "测试数据";
 
@@ -53,7 +58,7 @@ class ResultTest {
 
     @Test
     @DisplayName("success(code, message, data) - 完整参数")
-    void testSuccess_FullParams() {
+    void testSuccessFullParams() {
         // Given
         int code = 201;
         String message = "创建成功";
@@ -73,7 +78,7 @@ class ResultTest {
 
     @Test
     @DisplayName("failure() - 默认错误")
-    void testFailure_Default() {
+    void testFailureDefault() {
         // When
         Result<Void> result = Result.failure();
 
@@ -86,7 +91,7 @@ class ResultTest {
 
     @Test
     @DisplayName("failure(message) - 自定义消息")
-    void testFailure_WithMessage() {
+    void testFailureWithMessage() {
         // Given
         String message = "参数校验失败";
 
@@ -101,7 +106,7 @@ class ResultTest {
 
     @Test
     @DisplayName("failure(code, message) - 自定义状态码和消息")
-    void testFailure_WithCodeAndMessage() {
+    void testFailureWithCodeAndMessage() {
         // Given
         int code = 400;
         String message = "请求参数错误";
@@ -119,7 +124,7 @@ class ResultTest {
 
     @Test
     @DisplayName("isSuccess() - 200 状态码为成功")
-    void testIsSuccess_Code200() {
+    void testIsSuccessCode200() {
         // Given
         Result<String> result = Result.success(200, "成功", null);
 
@@ -129,7 +134,7 @@ class ResultTest {
 
     @Test
     @DisplayName("isSuccess() - 非 200 状态码为失败")
-    void testIsSuccess_Non200Code() {
+    void testIsSuccessNon200Code() {
         // Given
         Result<String> result = Result.failure(404, "未找到");
 
@@ -139,7 +144,7 @@ class ResultTest {
 
     @Test
     @DisplayName("isSuccess() - 其他成功状态码（2xx）")
-    void testIsSuccess_Other2xxCodes() {
+    void testIsSuccessOther2xxCodes() {
         // Given - 201 Created
         Result<String> result201 = Result.success(201, "已创建", null);
         // Given - 204 No Content
@@ -225,7 +230,7 @@ class ResultTest {
 
     @Test
     @DisplayName("equals - 相同内容应该相等")
-    void testEquals_SameContent() {
+    void testEqualsSameContent() {
         // Given
         Result<String> result1 = Result.success(200, "成功", "数据");
         Result<String> result2 = Result.success(200, "成功", "数据");
@@ -237,7 +242,7 @@ class ResultTest {
 
     @Test
     @DisplayName("equals - 不同内容应该不等")
-    void testEquals_DifferentContent() {
+    void testEqualsDifferentContent() {
         // Given
         Result<String> result1 = Result.success(200, "成功", "数据1");
         Result<String> result2 = Result.success(200, "成功", "数据2");

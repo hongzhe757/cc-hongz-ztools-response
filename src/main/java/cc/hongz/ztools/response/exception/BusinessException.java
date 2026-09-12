@@ -1,6 +1,6 @@
 package cc.hongz.ztools.response.exception;
 
-import cc.hongz.ztools.response.ajax.AjaxStatusInterface;
+import cc.hongz.ztools.status.AjaxStatusInterface;
 
 /**
  * 业务异常.

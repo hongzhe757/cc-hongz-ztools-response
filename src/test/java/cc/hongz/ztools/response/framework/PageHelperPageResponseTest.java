@@ -8,7 +8,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * PageHelperPageResponse 单元测试.
@@ -48,7 +51,7 @@ class PageHelperPageResponseTest {
 
     @Test
     @DisplayName("of() 空列表")
-    void testOf_EmptyList() {
+    void testOfEmptyList() {
         // When
         PageHelperPageResponse<String> response = PageHelperPageResponse.of(
                 0L, 10, 1, 0, Collections.emptyList()
@@ -61,7 +64,7 @@ class PageHelperPageResponseTest {
 
     @Test
     @DisplayName("of() null 列表")
-    void testOf_NullList() {
+    void testOfNullList() {
         // When
         PageHelperPageResponse<String> response = PageHelperPageResponse.of(
                 0L, 10, 1, 0, null
@@ -95,7 +98,7 @@ class PageHelperPageResponseTest {
 
     @Test
     @DisplayName("toDataListInfo() 空数据转换")
-    void testToDataListInfo_Empty() {
+    void testToDataListInfoEmpty() {
         // Given
         PageHelperPageResponse<String> response = PageHelperPageResponse.of(
                 0L, 10, 1, 0, Collections.emptyList()

@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 标准响应类（AliResponse、TencentResponse、BaiduResponse）的单元测试.
@@ -20,7 +24,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("AliResponse.success() - 无数据")
-    void testAliResponse_Success_NoData() {
+    void testAliResponseSuccessNoData() {
         // When
         AliResponse<Void> response = AliResponse.success();
 
@@ -35,7 +39,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("AliResponse.success(data) - 带数据")
-    void testAliResponse_Success_WithData() {
+    void testAliResponseSuccessWithData() {
         // Given
         String data = "阿里数据";
 
@@ -52,7 +56,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("AliResponse.error() - 错误响应")
-    void testAliResponse_Error() {
+    void testAliResponseError() {
         // Given
         String errorCode = "400";
         String errorMsg = "参数错误";
@@ -69,7 +73,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("AliResponse.error() - 带数据的错误响应")
-    void testAliResponse_Error_WithData() {
+    void testAliResponseErrorWithData() {
         // Given
         String errorCode = "500";
         String errorMsg = "系统错误";
@@ -90,7 +94,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("TencentResponse.success() - 无数据")
-    void testTencentResponse_Success_NoData() {
+    void testTencentResponseSuccessNoData() {
         // When
         TencentResponse<Void> response = TencentResponse.success();
 
@@ -104,7 +108,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("TencentResponse.success(data) - 带数据")
-    void testTencentResponse_Success_WithData() {
+    void testTencentResponseSuccessWithData() {
         // Given
         String data = "腾讯数据";
 
@@ -120,7 +124,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("TencentResponse.success(msg, data) - 自定义消息")
-    void testTencentResponse_Success_CustomMessage() {
+    void testTencentResponseSuccessCustomMessage() {
         // Given
         String msg = "操作成功";
         String data = "数据";
@@ -137,7 +141,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("TencentResponse.success(ret, msg, data) - 完整参数")
-    void testTencentResponse_Success_FullParams() {
+    void testTencentResponseSuccessFullParams() {
         // Given
         int ret = 0;
         String msg = "成功";
@@ -155,7 +159,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("TencentResponse.error() - 错误响应")
-    void testTencentResponse_Error() {
+    void testTencentResponseError() {
         // Given
         int ret = -1;
         String msg = "系统错误";
@@ -172,7 +176,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("TencentResponse.error() - 带数据的错误响应")
-    void testTencentResponse_Error_WithData() {
+    void testTencentResponseErrorWithData() {
         // Given
         int ret = -2;
         String msg = "业务错误";
@@ -192,7 +196,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("BaiduResponse.success() - 无数据")
-    void testBaiduResponse_Success_NoData() {
+    void testBaiduResponseSuccessNoData() {
         // When
         BaiduResponse<Void> response = BaiduResponse.success();
 
@@ -206,7 +210,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("BaiduResponse.success(data) - 带数据")
-    void testBaiduResponse_Success_WithData() {
+    void testBaiduResponseSuccessWithData() {
         // Given
         String data = "百度数据";
 
@@ -222,7 +226,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("BaiduResponse.success(errmsg, data) - 自定义消息")
-    void testBaiduResponse_Success_CustomMessage() {
+    void testBaiduResponseSuccessCustomMessage() {
         // Given
         String errmsg = "操作成功";
         String data = "数据";
@@ -239,7 +243,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("BaiduResponse.success(errno, errmsg, data) - 完整参数")
-    void testBaiduResponse_Success_FullParams() {
+    void testBaiduResponseSuccessFullParams() {
         // Given
         int errno = 0;
         String errmsg = "成功";
@@ -257,7 +261,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("BaiduResponse.error() - 错误响应")
-    void testBaiduResponse_Error() {
+    void testBaiduResponseError() {
         // Given
         int errno = -1;
         String errmsg = "系统错误";
@@ -274,7 +278,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("BaiduResponse.error() - 带数据的错误响应")
-    void testBaiduResponse_Error_WithData() {
+    void testBaiduResponseErrorWithData() {
         // Given
         int errno = -2;
         String errmsg = "业务错误";
@@ -294,7 +298,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("AliResponse.isSuccess() - 正确判断")
-    void testAliResponse_IsSuccess() {
+    void testAliResponseIsSuccess() {
         // Given
         AliResponse<String> successResponse = AliResponse.success("数据");
         AliResponse<String> errorResponse = AliResponse.error("400", "错误");
@@ -306,7 +310,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("TencentResponse.isSuccess() - 正确判断")
-    void testTencentResponse_IsSuccess() {
+    void testTencentResponseIsSuccess() {
         // Given
         TencentResponse<String> successResponse = TencentResponse.success("数据");
         TencentResponse<String> errorResponse = TencentResponse.error(-1, "错误");
@@ -318,7 +322,7 @@ class StandardResponseTest {
 
     @Test
     @DisplayName("BaiduResponse.isSuccess() - 正确判断")
-    void testBaiduResponse_IsSuccess() {
+    void testBaiduResponseIsSuccess() {
         // Given
         BaiduResponse<String> successResponse = BaiduResponse.success("数据");
         BaiduResponse<String> errorResponse = BaiduResponse.error(-1, "错误");

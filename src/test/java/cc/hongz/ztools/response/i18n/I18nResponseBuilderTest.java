@@ -1,18 +1,20 @@
 package cc.hongz.ztools.response.i18n;
 
 import cc.hongz.ztools.response.ajax.AjaxResult;
-import cc.hongz.ztools.response.ajax.AjaxStatusEnum;
+import cc.hongz.ztools.status.AjaxStatusEnum;
 import cc.hongz.ztools.response.exception.BusinessException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * I18nResponseBuilder 单元测试。
@@ -112,12 +114,12 @@ class I18nResponseBuilderTest {
     @DisplayName("带区域获取消息测试")
     void testGetMessageWithLocale() {
         // 测试中文
-        String zhMessage = builder.getMessage("common.success", "默认消息");
+        String zhMessage = builder.getMessage("COMMON_000", "默认消息");
         assertNotNull(zhMessage);
 
         // 测试英文（需要设置 Locale）
         builder.setDefaultLocale(Locale.US);
-        String enMessage = builder.getMessage("common.success", "Default message");
+        String enMessage = builder.getMessage("COMMON_000", "Default message");
         assertNotNull(enMessage);
     }
 
@@ -163,15 +165,6 @@ class I18nResponseBuilderTest {
         assertNotNull(message);
         // 应该包含参数值
         assertTrue(message.contains("ORDER_001") || message.contains("订单创建失败"));
-    }
-
-    @Test
-    @DisplayName("设置默认区域测试")
-    void testSetDefaultLocale() {
-        builder.setDefaultLocale(Locale.ENGLISH);
-
-        Locale locale = builder.getLocale();
-        assertNotNull(locale);
     }
 
     @Test

@@ -1,6 +1,6 @@
 package cc.hongz.ztools.response.config;
 
-import cc.hongz.ztools.response.ajax.AjaxStatusRegistry;
+import cc.hongz.ztools.status.AjaxStatusRegistry;
 import cc.hongz.ztools.response.handler.GlobalExceptionHandler;
 import cc.hongz.ztools.response.i18n.I18nResponseBuilder;
 import cc.hongz.ztools.response.interceptor.InterceptorProperties;

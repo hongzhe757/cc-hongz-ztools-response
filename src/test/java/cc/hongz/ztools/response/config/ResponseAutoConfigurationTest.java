@@ -1,6 +1,6 @@
 package cc.hongz.ztools.response.config;
 
-import cc.hongz.ztools.response.ajax.AjaxStatusRegistry;
+import cc.hongz.ztools.status.AjaxStatusRegistry;
 import cc.hongz.ztools.response.handler.GlobalExceptionHandler;
 import cc.hongz.ztools.response.i18n.I18nResponseBuilder;
 import cc.hongz.ztools.response.interceptor.InterceptorProperties;
@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link ResponseAutoConfiguration} Spring Bean 注册测试.
@@ -65,7 +67,7 @@ class ResponseAutoConfigurationTest {
         context = new AnnotationConfigApplicationContext(ResponseAutoConfiguration.class);
         I18nResponseBuilder builder = context.getBean(I18nResponseBuilder.class);
 
-        String message = builder.getMessage("common.success", "fallback");
+        String message = builder.getMessage("COMMON_000", "fallback");
         assertEquals("操作成功", message);
     }
 

@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link PageData} 分页数据单元测试.
@@ -36,7 +39,7 @@ class PageDataTest {
 
     @Test
     @DisplayName("of - 总页数向上取整")
-    void testOf_PagesCeiling() {
+    void testOfPagesCeiling() {
         List<Integer> records = Arrays.asList(1, 2, 3, 4, 5);
         
         PageData<Integer> pageData = PageData.of(records, 23L, 1, 10);

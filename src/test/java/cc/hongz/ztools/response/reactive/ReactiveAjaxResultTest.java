@@ -3,13 +3,14 @@ package cc.hongz.ztools.response.reactive;
 import cc.hongz.ztools.response.ajax.AjaxResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * ReactiveAjaxResult 单元测试.
@@ -27,7 +28,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("success(Mono) 创建成功响应")
-    void testSuccess_WithMono() {
+    void testSuccessWithMono() {
         // Given
         Mono<String> data = Mono.just("test data");
 
@@ -44,7 +45,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("success(msg, Mono) 带消息的成功响应")
-    void testSuccess_WithMsgAndMono() {
+    void testSuccessWithMsgAndMono() {
         // Given
         Mono<Integer> data = Mono.just(42);
 
@@ -59,7 +60,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("success(Mono.empty()) 空数据成功响应")
-    void testSuccess_EmptyMono() {
+    void testSuccessEmptyMono() {
         // When
         ReactiveAjaxResult<String> result = ReactiveAjaxResult.success(Mono.empty());
 
@@ -86,7 +87,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("error() 客户端错误")
-    void testError_ClientError() {
+    void testErrorClientError() {
         // When
         ReactiveAjaxResult<Void> result = ReactiveAjaxResult.error("404", "资源不存在");
 
@@ -133,7 +134,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("toAjaxResult() null data 转换")
-    void testToAjaxResult_NullData() {
+    void testToAjaxResultNullData() {
         // Given
         ReactiveAjaxResult<String> reactive = new ReactiveAjaxResult<>();
         reactive.setCode("200");
@@ -168,7 +169,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("toMono() null data 时返回空数据的 AjaxResult")
-    void testToMono_NullData() {
+    void testToMonoNullData() {
         // Given
         ReactiveAjaxResult<String> reactive = new ReactiveAjaxResult<>();
         reactive.setCode("200");
@@ -187,14 +188,14 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("isSuccess() code=200 返回 true")
-    void testIsSuccess_Code200() {
+    void testIsSuccessCode200() {
         ReactiveAjaxResult<Object> result = ReactiveAjaxResult.success(Mono.empty());
         assertTrue(result.isSuccess());
     }
 
     @Test
     @DisplayName("isSuccess() code=0 返回 true")
-    void testIsSuccess_Code0() {
+    void testIsSuccessCode0() {
         ReactiveAjaxResult<Object> result = new ReactiveAjaxResult<>();
         result.setCode("0");
         assertTrue(result.isSuccess());
@@ -202,7 +203,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("isSuccess() code=success 返回 true")
-    void testIsSuccess_CodeSuccess() {
+    void testIsSuccessCodeSuccess() {
         ReactiveAjaxResult<Object> result = new ReactiveAjaxResult<>();
         result.setCode("success");
         assertTrue(result.isSuccess());
@@ -210,7 +211,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("isSuccess() code=SUCCESS 大小写不敏感")
-    void testIsSuccess_CodeSuccessUpperCase() {
+    void testIsSuccessCodeSuccessUpperCase() {
         ReactiveAjaxResult<Object> result = new ReactiveAjaxResult<>();
         result.setCode("SUCCESS");
         assertTrue(result.isSuccess());
@@ -218,7 +219,7 @@ class ReactiveAjaxResultTest {
 
     @Test
     @DisplayName("isSuccess() code=500 返回 false")
-    void testIsSuccess_Code500() {
+    void testIsSuccessCode500() {
         ReactiveAjaxResult<Object> result = ReactiveAjaxResult.error("500", "error");
         assertFalse(result.isSuccess());
     }

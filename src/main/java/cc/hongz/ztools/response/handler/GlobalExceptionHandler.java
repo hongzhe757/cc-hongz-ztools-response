@@ -1,7 +1,7 @@
 package cc.hongz.ztools.response.handler;
 
 import cc.hongz.ztools.response.ajax.AjaxResult;
-import cc.hongz.ztools.response.ajax.AjaxStatusEnum;
+import cc.hongz.ztools.status.AjaxStatusEnum;
 import cc.hongz.ztools.response.exception.BusinessException;
 import cc.hongz.ztools.response.i18n.I18nResponseBuilder;
 import org.slf4j.Logger;
@@ -173,7 +173,7 @@ public class GlobalExceptionHandler {
      * @param httpStatusCode 自定义 HTTP 状态码
      * @return Spring HttpStatus
      */
-    private HttpStatus mapToHttpStatus(final cc.hongz.ztools.response.http.HttpStatusCode httpStatusCode) {
+    private HttpStatus mapToHttpStatus(final cc.hongz.ztools.status.HttpStatusCode httpStatusCode) {
         if (httpStatusCode == null) {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
