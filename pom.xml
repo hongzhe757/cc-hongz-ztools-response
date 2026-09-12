@@ -33,6 +33,12 @@
             <artifactId>cc-hongz-ztools-status</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- ZTools i18n：国际化消息解析 -->
+        <dependency>
+            <groupId>cc.hongz</groupId>
+            <artifactId>cc-hongz-ztools-i18n</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Lombok：编译期注解处理 -->
         <dependency>
             <groupId>org.projectlombok</groupId>

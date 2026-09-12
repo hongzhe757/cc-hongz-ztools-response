@@ -67,7 +67,7 @@ class ResponseAutoConfigurationTest {
         context = new AnnotationConfigApplicationContext(ResponseAutoConfiguration.class);
         I18nResponseBuilder builder = context.getBean(I18nResponseBuilder.class);
 
-        String message = builder.getMessage("common.success", "fallback");
+        String message = builder.getMessage("COMMON_000", "fallback");
         assertEquals("操作成功", message);
     }
 
