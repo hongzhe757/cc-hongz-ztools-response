@@ -335,6 +335,6 @@ public class AjaxResult<T> {
      * @return 成功返回 true
      */
     public boolean isSuccess() {
-        return "200".equals(code) || "0".equals(code) || "success".equalsIgnoreCase(code) || "2000".equals(code);
+        return "200".equals(code) || "0".equals(code) || "success".equalsIgnoreCase(code);
     }
 }
