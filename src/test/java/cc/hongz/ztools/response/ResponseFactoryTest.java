@@ -28,7 +28,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link ResponseFactory} 响应工厂的单元测试.
@@ -46,7 +50,7 @@ class ResponseFactoryTest {
 
     @Test
     @DisplayName("ajaxSuccess(data) - 创建成功响应")
-    void testAjaxSuccess_WithData() {
+    void testAjaxSuccessWithData() {
         String data = "测试数据";
         AjaxResult result = ResponseFactory.ajaxSuccess(data);
 
@@ -58,7 +62,7 @@ class ResponseFactoryTest {
 
     @Test
     @DisplayName("ajaxSuccess(msg, data) - 带消息的成功响应")
-    void testAjaxSuccess_WithMsgAndData() {
+    void testAjaxSuccessWithMsgAndData() {
         String msg = "查询成功";
         String data = "数据";
         AjaxResult result = ResponseFactory.ajaxSuccess(msg, data);
@@ -70,7 +74,7 @@ class ResponseFactoryTest {
 
     @Test
     @DisplayName("ajaxError(msg) - 创建错误响应")
-    void testAjaxError_WithMsg() {
+    void testAjaxErrorWithMsg() {
         String msg = "操作失败";
         AjaxResult result = ResponseFactory.ajaxError(msg);
 
@@ -81,7 +85,7 @@ class ResponseFactoryTest {
 
     @Test
     @DisplayName("ajaxError(code, msg) - 带状态码的错误响应")
-    void testAjaxError_WithCodeAndMsg() {
+    void testAjaxErrorWithCodeAndMsg() {
         // 注意：AjaxResult.error(String, String) 会匹配 error(String msg, Object data)
         // 所以第一个参数被视为 msg，第二个参数被视为 data
         String code = "404";

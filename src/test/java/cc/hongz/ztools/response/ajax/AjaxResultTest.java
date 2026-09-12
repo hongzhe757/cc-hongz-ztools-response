@@ -7,7 +7,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link AjaxResult} 单元测试.
@@ -22,7 +26,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success() - 默认成功")
-    void testSuccess_Default() {
+    void testSuccessDefault() {
         AjaxResult result = AjaxResult.success();
         
         assertNotNull(result);
@@ -35,7 +39,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(msg) - 自定义消息")
-    void testSuccess_WithMessage() {
+    void testSuccessWithMessage() {
         String msg = "自定义成功消息";
         AjaxResult result = AjaxResult.success(msg);
         
@@ -47,7 +51,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(data) - 带数据")
-    void testSuccess_WithData() {
+    void testSuccessWithData() {
         // 使用非String对象来确保调用 success(Object data) 而不是 success(String msg)
         Integer data = 12345;
         AjaxResult result = AjaxResult.success(data);
@@ -60,7 +64,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(msg, data) - 自定义消息和数据")
-    void testSuccess_WithMessageAndData() {
+    void testSuccessWithMessageAndData() {
         String msg = "查询成功";
         Map<String, Object> data = Map.of("id", 1, "name", "test");
         
@@ -74,7 +78,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(code, msg, data) - 完整参数")
-    void testSuccess_FullParams() {
+    void testSuccessFullParams() {
         String code = "201";
         String msg = "已创建";
         String data = "新资源ID";
@@ -90,7 +94,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(code, msg, null) - null 数据保持 null")
-    void testSuccess_NullDataReplaced() {
+    void testSuccessNullDataReplaced() {
         AjaxResult result = AjaxResult.success("200", "成功", null);
 
         assertTrue(result.isSuccess());
@@ -101,7 +105,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error() - 默认错误")
-    void testError_Default() {
+    void testErrorDefault() {
         AjaxResult result = AjaxResult.error();
         
         assertNotNull(result);
@@ -113,7 +117,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(msg) - 自定义消息")
-    void testError_WithMessage() {
+    void testErrorWithMessage() {
         String msg = "参数校验失败";
         AjaxResult result = AjaxResult.error(msg);
         
@@ -124,7 +128,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(data) - 带数据")
-    void testError_WithData() {
+    void testErrorWithData() {
         // 使用非String对象来确保调用 error(Object data) 而不是 error(String msg)
         Integer data = 999;
         AjaxResult result = AjaxResult.error(data);
@@ -137,7 +141,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(msg, data) - 自定义消息和数据")
-    void testError_WithMessageAndData() {
+    void testErrorWithMessageAndData() {
         String msg = "权限不足";
         Map<String, Object> data = Map.of("requiredRole", "ADMIN");
         
@@ -151,7 +155,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(code, msg, data) - 完整参数")
-    void testError_FullParams() {
+    void testErrorFullParams() {
         String code = "403";
         String msg = "禁止访问";
         String data = "需要VIP权限";
@@ -166,7 +170,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(code, msg, no, data) - 占位符替换")
-    void testError_WithPlaceholder() {
+    void testErrorWithPlaceholder() {
         String code = "404";
         String msg = "用户N不存在";
         String no = "12345";
@@ -184,21 +188,21 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("isSuccess() - code=200 为成功")
-    void testIsSuccess_Code200() {
+    void testIsSuccessCode200() {
         AjaxResult result = new AjaxResult("200", "成功", null);
         assertTrue(result.isSuccess());
     }
 
     @Test
     @DisplayName("isSuccess() - code=0 为成功")
-    void testIsSuccess_Code0() {
+    void testIsSuccessCode0() {
         AjaxResult result = new AjaxResult("0", "成功", null);
         assertTrue(result.isSuccess());
     }
 
     @Test
     @DisplayName("isSuccess() - code=success (忽略大小写) 为成功")
-    void testIsSuccess_CodeSuccessIgnoreCase() {
+    void testIsSuccessCodeSuccessIgnoreCase() {
         AjaxResult result1 = new AjaxResult("success", "成功", null);
         AjaxResult result2 = new AjaxResult("SUCCESS", "成功", null);
         AjaxResult result3 = new AjaxResult("Success", "成功", null);
@@ -210,7 +214,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("isSuccess() - 其他状态码为失败")
-    void testIsSuccess_OtherCodes() {
+    void testIsSuccessOtherCodes() {
         assertFalse(new AjaxResult("201", "已创建", null).isSuccess());
         assertFalse(new AjaxResult("400", "错误请求", null).isSuccess());
         assertFalse(new AjaxResult("404", "未找到", null).isSuccess());
@@ -273,7 +277,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(HttpStatusCode, data) - 使用 HTTP 状态码")
-    void testSuccess_WithHttpStatusCode() {
+    void testSuccessWithHttpStatusCode() {
         String data = "test data";
         AjaxResult result = AjaxResult.success(HttpStatusCode.OK, data);
         
@@ -285,7 +289,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(HttpStatusCode, msg, data) - 使用 HTTP 状态码和自定义消息")
-    void testSuccess_WithHttpStatusCodeAndMessage() {
+    void testSuccessWithHttpStatusCodeAndMessage() {
         String data = "created resource";
         AjaxResult result = AjaxResult.success(HttpStatusCode.CREATED, "资源已创建", data);
         
@@ -297,7 +301,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(HttpStatusCode, detail) - 使用 HTTP 状态码")
-    void testError_WithHttpStatusCode() {
+    void testErrorWithHttpStatusCode() {
         String detail = "用户不存在";
         AjaxResult result = AjaxResult.error(HttpStatusCode.NOT_FOUND, detail);
         
@@ -309,7 +313,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(HttpStatusCode, msg, data) - 使用 HTTP 状态码和自定义消息")
-    void testError_WithHttpStatusCodeAndMessage() {
+    void testErrorWithHttpStatusCodeAndMessage() {
         String data = "需要管理员权限";
         AjaxResult result = AjaxResult.error(HttpStatusCode.FORBIDDEN, "权限不足", data);
         
@@ -323,7 +327,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(BusinessCode, data) - 使用业务状态码")
-    void testSuccess_WithBusinessCode() {
+    void testSuccessWithBusinessCode() {
         String data = "user data";
         AjaxResult result = AjaxResult.success(AjaxStatusEnum.SUCCESS, data);
         
@@ -337,7 +341,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("success(BusinessCode, msg, data) - 使用业务状态码和自定义消息")
-    void testSuccess_WithBusinessCodeAndMessage() {
+    void testSuccessWithBusinessCodeAndMessage() {
         String data = "order data";
         AjaxResult result = AjaxResult.success(AjaxStatusEnum.SUCCESS, "订单创建成功", data);
         
@@ -350,7 +354,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(BusinessCode, detail) - 使用业务状态码")
-    void testError_WithBusinessCode() {
+    void testErrorWithBusinessCode() {
         String detail = "ID: 12345";
         AjaxResult result = AjaxResult.error(AjaxStatusEnum.NOT_FOUND, detail);
         
@@ -362,7 +366,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(BusinessCode, args...) - 参数替换")
-    void testError_WithBusinessCodeAndArgs() {
+    void testErrorWithBusinessCodeAndArgs() {
         // 使用显式 Object[] 避免与 error(BusinessCode, String, Object) 重载歧义
         AjaxResult result = AjaxResult.error(AjaxStatusEnum.PARAM_INVALID, new Object[]{"username"});
         
@@ -374,7 +378,7 @@ class AjaxResultTest {
 
     @Test
     @DisplayName("error(BusinessCode, msg, data) - 使用业务状态码和自定义消息")
-    void testError_WithBusinessCodeAndMessage() {
+    void testErrorWithBusinessCodeAndMessage() {
         String data = "required roles: ADMIN";
         AjaxResult result = AjaxResult.error(AjaxStatusEnum.FORBIDDEN, "访问被拒绝", data);
         

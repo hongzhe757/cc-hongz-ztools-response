@@ -7,7 +7,10 @@ import reactor.core.publisher.Flux;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * ReactiveCollectionResult 单元测试.
@@ -25,7 +28,7 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("success(Flux) 创建成功集合响应")
-    void testSuccess_WithFlux() {
+    void testSuccessWithFlux() {
         // Given
         Flux<String> data = Flux.just("a", "b", "c");
 
@@ -46,7 +49,7 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("success(Flux, total) 带总数的集合响应")
-    void testSuccess_WithTotal() {
+    void testSuccessWithTotal() {
         // Given
         Flux<Integer> data = Flux.just(1, 2, 3);
 
@@ -61,7 +64,7 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("success(Flux.empty()) 空数据流")
-    void testSuccess_EmptyFlux() {
+    void testSuccessEmptyFlux() {
         // When
         ReactiveCollectionResult<String> result = ReactiveCollectionResult.success(Flux.empty());
 
@@ -109,7 +112,7 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("fromIterable() 空 Iterable")
-    void testFromIterable_Empty() {
+    void testFromIterableEmpty() {
         // When
         ReactiveCollectionResult<String> result = ReactiveCollectionResult.fromIterable(List.of());
 
@@ -136,7 +139,7 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("fromArray() 空数组")
-    void testFromArray_Empty() {
+    void testFromArrayEmpty() {
         // When
         ReactiveCollectionResult<String> result = ReactiveCollectionResult.fromArray();
 
@@ -150,14 +153,14 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("isSuccess() code=200 返回 true")
-    void testIsSuccess_Code200() {
+    void testIsSuccessCode200() {
         ReactiveCollectionResult<Object> result = ReactiveCollectionResult.success(Flux.empty());
         assertTrue(result.isSuccess());
     }
 
     @Test
     @DisplayName("isSuccess() code=0 返回 true")
-    void testIsSuccess_Code0() {
+    void testIsSuccessCode0() {
         ReactiveCollectionResult<Object> result = new ReactiveCollectionResult<>();
         result.setCode("0");
         assertTrue(result.isSuccess());
@@ -165,7 +168,7 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("isSuccess() code=success 大小写不敏感")
-    void testIsSuccess_CodeSuccessIgnoreCase() {
+    void testIsSuccessCodeSuccessIgnoreCase() {
         ReactiveCollectionResult<Object> result = new ReactiveCollectionResult<>();
         result.setCode("SUCCESS");
         assertTrue(result.isSuccess());
@@ -173,7 +176,7 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("isSuccess() code=500 返回 false")
-    void testIsSuccess_Code500() {
+    void testIsSuccessCode500() {
         ReactiveCollectionResult<Object> result = ReactiveCollectionResult.error("500", "error");
         assertFalse(result.isSuccess());
     }
@@ -182,14 +185,14 @@ class ReactiveCollectionResultTest {
 
     @Test
     @DisplayName("hasTotal() 有总数返回 true")
-    void testHasTotal_True() {
+    void testHasTotalTrue() {
         ReactiveCollectionResult<String> result = ReactiveCollectionResult.success(Flux.empty(), 50L);
         assertTrue(result.hasTotal());
     }
 
     @Test
     @DisplayName("hasTotal() 无总数返回 false")
-    void testHasTotal_False() {
+    void testHasTotalFalse() {
         ReactiveCollectionResult<String> result = ReactiveCollectionResult.success(Flux.empty());
         assertFalse(result.hasTotal());
     }

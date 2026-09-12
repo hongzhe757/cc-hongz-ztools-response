@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * HTTP 响应包装器测试.
@@ -22,7 +25,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("JdkHttpResponseWrapper - success 工厂方法 (200)")
-    void testJdkHttp_Success() {
+    void testJdkHttpSuccess() {
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Content-Type", Collections.singletonList("application/json"));
 
@@ -37,7 +40,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("JdkHttpResponseWrapper - success 工厂方法 (404)")
-    void testJdkHttp_ClientError() {
+    void testJdkHttpClientError() {
         JdkHttpResponseWrapper<String> wrapper = JdkHttpResponseWrapper.success(404, null, null);
 
         assertEquals(404, wrapper.getStatusCode());
@@ -48,7 +51,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("JdkHttpResponseWrapper - success 工厂方法 (500)")
-    void testJdkHttp_ServerError() {
+    void testJdkHttpServerError() {
         JdkHttpResponseWrapper<String> wrapper = JdkHttpResponseWrapper.success(500, "error", null);
 
         assertEquals(500, wrapper.getStatusCode());
@@ -59,7 +62,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("JdkHttpResponseWrapper - builder 模式")
-    void testJdkHttp_Builder() {
+    void testJdkHttpBuilder() {
         JdkHttpResponseWrapper<String> wrapper = JdkHttpResponseWrapper.<String>builder()
                 .statusCode(201)
                 .body("created")
@@ -79,7 +82,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("SpringResponseEntityWrapper - success 工厂方法 (200)")
-    void testSpring_Success() {
+    void testSpringSuccess() {
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Content-Type", Collections.singletonList("application/json"));
 
@@ -95,7 +98,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("SpringResponseEntityWrapper - success 工厂方法 (403)")
-    void testSpring_ClientError() {
+    void testSpringClientError() {
         SpringResponseEntityWrapper<String> wrapper = SpringResponseEntityWrapper.success(403, "Forbidden", null, null);
 
         assertEquals(403, wrapper.getStatusCodeValue());
@@ -107,8 +110,9 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("SpringResponseEntityWrapper - success 工厂方法 (503)")
-    void testSpring_ServerError() {
-        SpringResponseEntityWrapper<String> wrapper = SpringResponseEntityWrapper.success(503, "Service Unavailable", "error", null);
+    void testSpringServerError() {
+        SpringResponseEntityWrapper<String> wrapper =
+            SpringResponseEntityWrapper.success(503, "Service Unavailable", "error", null);
 
         assertEquals(503, wrapper.getStatusCodeValue());
         assertFalse(wrapper.isSuccess());
@@ -118,7 +122,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("SpringResponseEntityWrapper - builder 模式")
-    void testSpring_Builder() {
+    void testSpringBuilder() {
         SpringResponseEntityWrapper<String> wrapper = SpringResponseEntityWrapper.<String>builder()
                 .statusCodeValue(204)
                 .statusCodeName("No Content")
@@ -136,7 +140,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("ApacheHttpResponseWrapper - builder 和判断方法")
-    void testApache_BuilderAndJudgment() {
+    void testApacheBuilderAndJudgment() {
         ApacheHttpResponseWrapper<String> wrapper = ApacheHttpResponseWrapper.<String>builder()
                 .statusCode(200)
                 .body("apache data")
@@ -154,7 +158,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("ApacheHttpResponseWrapper - 4xx 客户端错误")
-    void testApache_ClientError() {
+    void testApacheClientError() {
         ApacheHttpResponseWrapper<String> wrapper = ApacheHttpResponseWrapper.<String>builder()
                 .statusCode(400)
                 .body("bad request")
@@ -170,7 +174,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("OkHttpResponseWrapper - builder 和判断方法")
-    void testOkHttp_BuilderAndJudgment() {
+    void testOkHttpBuilderAndJudgment() {
         OkHttpResponseWrapper<String> wrapper = OkHttpResponseWrapper.<String>builder()
                 .code(200)
                 .message("OK")
@@ -188,7 +192,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("OkHttpResponseWrapper - 5xx 服务器错误")
-    void testOkHttp_ServerError() {
+    void testOkHttpServerError() {
         OkHttpResponseWrapper<String> wrapper = OkHttpResponseWrapper.<String>builder()
                 .code(502)
                 .message("Bad Gateway")
@@ -205,7 +209,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("FeignResponseWrapper - builder 和判断方法")
-    void testFeign_BuilderAndJudgment() {
+    void testFeignBuilderAndJudgment() {
         FeignResponseWrapper<String> wrapper = FeignResponseWrapper.<String>builder()
                 .status(200)
                 .reason("OK")
@@ -223,7 +227,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("FeignResponseWrapper - 401 未授权")
-    void testFeign_Unauthorized() {
+    void testFeignUnauthorized() {
         FeignResponseWrapper<String> wrapper = FeignResponseWrapper.<String>builder()
                 .status(401)
                 .reason("Unauthorized")
@@ -240,7 +244,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("WebClientResponseWrapper - builder 和判断方法")
-    void testWebClient_BuilderAndJudgment() {
+    void testWebClientBuilderAndJudgment() {
         WebClientResponseWrapper<String> wrapper = WebClientResponseWrapper.<String>builder()
                 .statusCodeValue(200)
                 .statusCodeName("OK")
@@ -258,7 +262,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("WebClientResponseWrapper - 边界值 299 (成功)")
-    void testWebClient_BoundarySuccess() {
+    void testWebClientBoundarySuccess() {
         WebClientResponseWrapper<String> wrapper = WebClientResponseWrapper.<String>builder()
                 .statusCodeValue(299)
                 .successful(true)
@@ -271,7 +275,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("WebClientResponseWrapper - 边界值 300 (非成功)")
-    void testWebClient_BoundaryRedirect() {
+    void testWebClientBoundaryRedirect() {
         WebClientResponseWrapper<String> wrapper = WebClientResponseWrapper.<String>builder()
                 .statusCodeValue(300)
                 .successful(false)
@@ -284,7 +288,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("WebClientResponseWrapper - 边界值 399 (非客户端错误)")
-    void testWebClient_Boundary399() {
+    void testWebClientBoundary399() {
         WebClientResponseWrapper<String> wrapper = WebClientResponseWrapper.<String>builder()
                 .statusCodeValue(399)
                 .successful(false)
@@ -296,7 +300,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("WebClientResponseWrapper - 边界值 400 (客户端错误)")
-    void testWebClient_Boundary400() {
+    void testWebClientBoundary400() {
         WebClientResponseWrapper<String> wrapper = WebClientResponseWrapper.<String>builder()
                 .statusCodeValue(400)
                 .successful(false)
@@ -308,7 +312,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("WebClientResponseWrapper - 边界值 499 (客户端错误)")
-    void testWebClient_Boundary499() {
+    void testWebClientBoundary499() {
         WebClientResponseWrapper<String> wrapper = WebClientResponseWrapper.<String>builder()
                 .statusCodeValue(499)
                 .successful(false)
@@ -320,7 +324,7 @@ class HttpResponseWrapperTest {
 
     @Test
     @DisplayName("WebClientResponseWrapper - 边界值 500 (服务器错误)")
-    void testWebClient_Boundary500() {
+    void testWebClientBoundary500() {
         WebClientResponseWrapper<String> wrapper = WebClientResponseWrapper.<String>builder()
                 .statusCodeValue(500)
                 .successful(false)

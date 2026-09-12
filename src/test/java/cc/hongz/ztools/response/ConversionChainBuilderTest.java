@@ -5,7 +5,12 @@ import cc.hongz.ztools.response.core.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link ConversionChainBuilder} 链式转换构建器的单元测试.
@@ -42,7 +47,7 @@ class ConversionChainBuilderTest {
 
     @Test
     @DisplayName("transform - 多步转换")
-    void testTransform_MultipleSteps() {
+    void testTransformMultipleSteps() {
         Integer result = new ConversionChainBuilder()
                 .from("hello")
                 .<String, Integer>transform(s -> s.length())
@@ -54,7 +59,7 @@ class ConversionChainBuilderTest {
 
     @Test
     @DisplayName("transformIf - 条件转换 (条件为真)")
-    void testTransformIf_ConditionTrue() {
+    void testTransformIfConditionTrue() {
         String result = new ConversionChainBuilder()
                 .from("hello")
                 .<String>transformIf(s -> s.length() > 3, s -> s.toUpperCase())
@@ -65,7 +70,7 @@ class ConversionChainBuilderTest {
 
     @Test
     @DisplayName("transformIf - 条件转换 (条件为假)")
-    void testTransformIf_ConditionFalse() {
+    void testTransformIfConditionFalse() {
         String result = new ConversionChainBuilder()
                 .from("hi")
                 .<String>transformIf(s -> s.length() > 3, s -> s.toUpperCase())
@@ -76,7 +81,7 @@ class ConversionChainBuilderTest {
 
     @Test
     @DisplayName("to - 类型转换 (相同类型)")
-    void testTo_SameType() {
+    void testToSameType() {
         String source = "test";
         String result = new ConversionChainBuilder()
                 .from(source)
@@ -88,7 +93,7 @@ class ConversionChainBuilderTest {
 
     @Test
     @DisplayName("to - 不支持的自动转换抛出异常")
-    void testTo_UnsupportedConversion() {
+    void testToUnsupportedConversion() {
         assertThrows(UnsupportedOperationException.class, () -> {
             new ConversionChainBuilder()
                     .from("string")
@@ -110,7 +115,7 @@ class ConversionChainBuilderTest {
 
     @Test
     @DisplayName("execute - 未设置源对象抛出异常")
-    void testExecute_NoSource() {
+    void testExecuteNoSource() {
         assertThrows(IllegalStateException.class, () -> {
             new ConversionChainBuilder().execute();
         });
@@ -129,7 +134,7 @@ class ConversionChainBuilderTest {
 
     @Test
     @DisplayName("executeAs - 类型不匹配抛出异常")
-    void testExecuteAs_TypeMismatch() {
+    void testExecuteAsTypeMismatch() {
         assertThrows(ClassCastException.class, () -> {
             new ConversionChainBuilder()
                     .from("hello")
@@ -169,7 +174,8 @@ class ConversionChainBuilderTest {
         AjaxResult result = new ConversionChainBuilder()
                 .from(source)
                 .<Result<String>, AjaxResult>transform(ResponseConverter::toAjaxResult)
-                .<AjaxResult, AjaxResult>transform(ajax -> AjaxResult.success(ajax.getCode(), "Modified: " + ajax.getMsg(), ajax.getData()))
+                .<AjaxResult, AjaxResult>transform(ajax -> AjaxResult.success(ajax.getCode(),
+                    "Modified: " + ajax.getMsg(), ajax.getData()))
                 .execute();
 
         assertNotNull(result);

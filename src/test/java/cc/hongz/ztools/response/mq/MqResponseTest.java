@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * MQ 响应测试.
@@ -22,7 +24,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("KafkaConsumerRecordResponse - of 工厂方法")
-    void testKafka_Of() {
+    void testKafkaOf() {
         KafkaConsumerRecordResponse<String, String> response = KafkaConsumerRecordResponse.of(
                 "test-topic", 0, 100L, System.currentTimeMillis(), "key1", "value1"
         );
@@ -36,7 +38,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("KafkaConsumerRecordResponse - builder 模式")
-    void testKafka_Builder() {
+    void testKafkaBuilder() {
         Map<String, byte[]> headers = new HashMap<>();
         headers.put("header1", "value1".getBytes());
 
@@ -62,7 +64,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("KafkaConsumerRecordResponse - null key/value")
-    void testKafka_NullKeyValue() {
+    void testKafkaNullKeyValue() {
         KafkaConsumerRecordResponse<String, String> response = KafkaConsumerRecordResponse.of(
                 "topic", 0, 0L, 0L, null, null
         );
@@ -75,7 +77,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("RocketMqResponse - success 工厂方法")
-    void testRocketMq_Success() {
+    void testRocketMqSuccess() {
         RocketMqResponse<String> response = RocketMqResponse.success(
                 "msg-001", "test-topic", "tag-a", "message body", "SEND_OK"
         );
@@ -89,7 +91,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("RocketMqResponse - builder 模式")
-    void testRocketMq_Builder() {
+    void testRocketMqBuilder() {
         Map<String, String> properties = new HashMap<>();
         properties.put("prop1", "value1");
 
@@ -115,10 +117,11 @@ class MqResponseTest {
 
     @Test
     @DisplayName("RocketMqResponse - 不同发送状态")
-    void testRocketMq_DifferentSendStatus() {
+    void testRocketMqDifferentSendStatus() {
         RocketMqResponse<String> ok = RocketMqResponse.success("id1", "t", "tag", "body", "SEND_OK");
         RocketMqResponse<String> timeout = RocketMqResponse.success("id2", "t", "tag", "body", "FLUSH_DISK_TIMEOUT");
-        RocketMqResponse<String> slaveTimeout = RocketMqResponse.success("id3", "t", "tag", "body", "FLUSH_SLAVE_TIMEOUT");
+        RocketMqResponse<String> slaveTimeout =
+            RocketMqResponse.success("id3", "t", "tag", "body", "FLUSH_SLAVE_TIMEOUT");
         RocketMqResponse<String> noSlave = RocketMqResponse.success("id4", "t", "tag", "body", "SLAVE_NOT_AVAILABLE");
 
         assertEquals("SEND_OK", ok.getSendStatus());
@@ -131,7 +134,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("RabbitMqRpcResponse - of 工厂方法")
-    void testRabbitMq_Of() {
+    void testRabbitMqOf() {
         RabbitMqRpcResponse<String> response = RabbitMqRpcResponse.of("corr-001", "reply-queue", "response data");
 
         assertEquals("corr-001", response.getCorrelationId());
@@ -142,7 +145,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("RabbitMqRpcResponse - withProperties 工厂方法")
-    void testRabbitMq_WithProperties() {
+    void testRabbitMqWithProperties() {
         Map<String, Object> props = new HashMap<>();
         props.put("contentType", "application/json");
         props.put("priority", 5);
@@ -161,7 +164,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("RabbitMqRpcResponse - builder 模式")
-    void testRabbitMq_Builder() {
+    void testRabbitMqBuilder() {
         RabbitMqRpcResponse<Integer> response = RabbitMqRpcResponse.<Integer>builder()
                 .correlationId("corr-003")
                 .replyTo("rpc-reply")
@@ -175,7 +178,7 @@ class MqResponseTest {
 
     @Test
     @DisplayName("RabbitMqRpcResponse - null data")
-    void testRabbitMq_NullData() {
+    void testRabbitMqNullData() {
         RabbitMqRpcResponse<String> response = RabbitMqRpcResponse.of("corr-004", "reply", null);
 
         assertNull(response.getData());

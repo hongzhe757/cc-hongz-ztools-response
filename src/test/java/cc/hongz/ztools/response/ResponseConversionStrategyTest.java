@@ -5,7 +5,12 @@ import cc.hongz.ztools.response.core.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * ResponseConversionStrategy 接口单元测试.
@@ -35,7 +40,7 @@ class ResponseConversionStrategyTest {
 
     @Test
     @DisplayName("identity() 对 null 输入返回 null")
-    void testIdentity_Null() {
+    void testIdentityNull() {
         // Given
         ResponseConversionStrategy<AjaxResult, AjaxResult> strategy = ResponseConversionStrategy.identity();
 
@@ -67,7 +72,7 @@ class ResponseConversionStrategyTest {
 
     @Test
     @DisplayName("andThen() 链式组合多个策略")
-    void testAndThen_Chain() {
+    void testAndThenChain() {
         // Given: Integer → String → Integer (length) → Boolean (>3)
         ResponseConversionStrategy<Integer, String> intToStr = i -> "num:" + i;
         ResponseConversionStrategy<String, Integer> strToInt = s -> s.length();
@@ -84,7 +89,7 @@ class ResponseConversionStrategyTest {
 
     @Test
     @DisplayName("andThen() 传入 null 抛出异常")
-    void testAndThen_NullAfter() {
+    void testAndThenNullAfter() {
         // Given
         ResponseConversionStrategy<String, String> strategy = s -> s.toUpperCase();
 

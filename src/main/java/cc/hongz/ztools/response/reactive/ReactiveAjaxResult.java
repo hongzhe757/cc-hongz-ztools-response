@@ -117,9 +117,9 @@ public class ReactiveAjaxResult<T> {
     }
 
     /**
-     * 转换为 Mono<AjaxResult>.
+     * 转换为 {@code Mono<AjaxResult>}.
      *
-     * @return Mono<AjaxResult>
+     * @return {@code Mono<AjaxResult>}
      */
     public Mono<AjaxResult> toMono() {
         if (data == null) {

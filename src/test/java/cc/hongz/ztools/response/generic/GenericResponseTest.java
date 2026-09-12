@@ -6,7 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 通用响应测试类.
@@ -23,7 +27,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - 成功响应")
-    void testJsonResponse_Success() {
+    void testJsonResponseSuccess() {
         String json = "{\"id\":1,\"name\":\"张三\"}";
         JsonResponse response = JsonResponse.success(json);
 
@@ -36,7 +40,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - 带消息的成功响应")
-    void testJsonResponse_SuccessWithMsg() {
+    void testJsonResponseSuccessWithMsg() {
         String json = "{\"count\":10}";
         JsonResponse response = JsonResponse.success("查询成功", json);
 
@@ -48,7 +52,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - 完整参数的成功响应")
-    void testJsonResponse_SuccessFull() {
+    void testJsonResponseSuccessFull() {
         String json = "{\"status\":\"ok\"}";
         JsonResponse response = JsonResponse.success("201", "创建成功", json);
 
@@ -61,7 +65,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - 错误响应")
-    void testJsonResponse_Error() {
+    void testJsonResponseError() {
         JsonResponse response = JsonResponse.error("服务器内部错误");
 
         assertFalse(response.isSuccess());
@@ -73,7 +77,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - 带状态码的错误响应")
-    void testJsonResponse_ErrorWithCode() {
+    void testJsonResponseErrorWithCode() {
         JsonResponse response = JsonResponse.error("404", "资源不存在");
 
         assertFalse(response.isSuccess());
@@ -84,7 +88,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - 带数据的错误响应")
-    void testJsonResponse_ErrorWithData() {
+    void testJsonResponseErrorWithData() {
         String errorDetail = "{\"field\":\"email\",\"reason\":\"invalid\"}";
         JsonResponse response = JsonResponse.error("400", "参数错误", errorDetail);
 
@@ -96,7 +100,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - getJsonDataOrDefault")
-    void testJsonResponse_GetJsonDataOrDefault() {
+    void testJsonResponseGetJsonDataOrDefault() {
         // 有数据时返回实际数据
         JsonResponse resp1 = JsonResponse.success("{\"key\":\"value\"}");
         assertEquals("{\"key\":\"value\"}", resp1.getJsonDataOrDefault());
@@ -108,7 +112,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("JsonResponse - hasData 判断")
-    void testJsonResponse_HasData() {
+    void testJsonResponseHasData() {
         assertTrue(JsonResponse.success("{}").hasData());
         assertTrue(JsonResponse.success("{\"a\":1}").hasData());
         assertFalse(JsonResponse.error("error").hasData());
@@ -119,7 +123,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 成功响应")
-    void testMapResponse_Success() {
+    void testMapResponseSuccess() {
         Map<String, Object> data = new HashMap<>();
         data.put("userId", 123L);
         data.put("userName", "张三");
@@ -135,7 +139,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 链式添加数据")
-    void testMapResponse_ChainPut() {
+    void testMapResponseChainPut() {
         MapResponse response = new MapResponse()
                 .put("status", "active")
                 .put("count", 10)
@@ -148,7 +152,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - Builder 模式")
-    void testMapResponse_Builder() {
+    void testMapResponseBuilder() {
         MapResponse response = MapResponse.builder()
                 .code("201")
                 .msg("创建成功")
@@ -166,7 +170,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 获取值")
-    void testMapResponse_GetValue() {
+    void testMapResponseGetValue() {
         Map<String, Object> data = Map.of("key1", "value1", "key2", 100);
         MapResponse response = MapResponse.success(data);
 
@@ -177,7 +181,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 获取值带默认值")
-    void testMapResponse_GetOrDefault() {
+    void testMapResponseGetOrDefault() {
         Map<String, Object> data = Map.of("existing", "value");
         MapResponse response = MapResponse.success(data);
 
@@ -187,7 +191,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - containsKey")
-    void testMapResponse_ContainsKey() {
+    void testMapResponseContainsKey() {
         Map<String, Object> data = Map.of("key1", "val1");
         MapResponse response = MapResponse.success(data);
 
@@ -197,7 +201,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 移除键")
-    void testMapResponse_Remove() {
+    void testMapResponseRemove() {
         MapResponse response = MapResponse.empty()
                 .put("key1", "val1")
                 .put("key2", "val2");
@@ -211,7 +215,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 清空数据")
-    void testMapResponse_Clear() {
+    void testMapResponseClear() {
         MapResponse response = MapResponse.empty()
                 .put("a", 1)
                 .put("b", 2);
@@ -224,7 +228,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 批量添加")
-    void testMapResponse_PutAll() {
+    void testMapResponsePutAll() {
         Map<String, Object> additional = Map.of("x", 10, "y", 20);
         MapResponse response = MapResponse.empty()
                 .put("a", 1)
@@ -237,7 +241,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - 错误响应")
-    void testMapResponse_Error() {
+    void testMapResponseError() {
         MapResponse response = MapResponse.error("404", "未找到");
 
         assertFalse(response.isSuccess());
@@ -248,7 +252,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - of 工厂方法")
-    void testMapResponse_Of() {
+    void testMapResponseOf() {
         Map<String, Object> data = Map.of("test", "data");
         MapResponse response = MapResponse.of(data);
 
@@ -259,7 +263,7 @@ class GenericResponseTest {
 
     @Test
     @DisplayName("MapResponse - empty 工厂方法")
-    void testMapResponse_Empty() {
+    void testMapResponseEmpty() {
         MapResponse response = MapResponse.empty();
 
         assertTrue(response.isSuccess());

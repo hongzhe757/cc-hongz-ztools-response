@@ -7,7 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * standard 包剩余响应类的单元测试.
@@ -25,7 +29,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail.of(status, title, detail) - 创建简单错误详情")
-    void testProblemDetail_Of() {
+    void testProblemDetailOf() {
         ProblemDetail problem = ProblemDetail.of(400, "Bad Request", "参数无效");
 
         assertEquals(400, problem.getStatus());
@@ -37,7 +41,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail.of(type, status, title, detail) - 创建带类型的错误详情")
-    void testProblemDetail_OfType() {
+    void testProblemDetailOfType() {
         String type = "https://example.com/errors/validation";
         ProblemDetail problem = ProblemDetail.of(type, 422, "Unprocessable Entity", "验证失败");
 
@@ -49,7 +53,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail.badRequest(detail) - 创建 400 错误")
-    void testProblemDetail_BadRequest() {
+    void testProblemDetailBadRequest() {
         ProblemDetail problem = ProblemDetail.badRequest("请求参数格式错误");
 
         assertEquals(400, problem.getStatus());
@@ -59,7 +63,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail.notFound(detail) - 创建 404 错误")
-    void testProblemDetail_NotFound() {
+    void testProblemDetailNotFound() {
         ProblemDetail problem = ProblemDetail.notFound("用户不存在");
 
         assertEquals(404, problem.getStatus());
@@ -69,7 +73,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail.internalError(detail) - 创建 500 错误")
-    void testProblemDetail_InternalError() {
+    void testProblemDetailInternalError() {
         ProblemDetail problem = ProblemDetail.internalError("数据库连接失败");
 
         assertEquals(500, problem.getStatus());
@@ -79,7 +83,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail Builder 模式")
-    void testProblemDetail_Builder() {
+    void testProblemDetailBuilder() {
         Map<String, Object> extensions = Map.of("traceId", "abc-123");
         List<ProblemDetail.ValidationError> errors = Arrays.asList(
                 new ProblemDetail.ValidationError("email", "邮箱格式不正确", "invalid-email"),
@@ -107,7 +111,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail.ValidationError - 验证错误项")
-    void testProblemDetail_ValidationError() {
+    void testProblemDetailValidationError() {
         ProblemDetail.ValidationError error = new ProblemDetail.ValidationError("username", "用户名已存在", "testuser");
 
         assertEquals("username", error.getField());
@@ -117,7 +121,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("ProblemDetail Getter/Setter")
-    void testProblemDetail_GettersSetters() {
+    void testProblemDetailGettersSetters() {
         ProblemDetail problem = new ProblemDetail();
         problem.setType("https://example.com/error");
         problem.setTitle("Error");
@@ -140,7 +144,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse.success(data) - 创建成功响应")
-    void testGraphQLResponse_Success() {
+    void testGraphQLResponseSuccess() {
         Map<String, Object> data = Map.of("user", Map.of("id", 1, "name", "张三"));
         GraphQLResponse<Map<String, Object>> response = GraphQLResponse.success(data);
 
@@ -152,7 +156,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse.success(data, extensions) - 带扩展的成功响应")
-    void testGraphQLResponse_SuccessWithExtensions() {
+    void testGraphQLResponseSuccessWithExtensions() {
         String data = "查询结果";
         Map<String, Object> extensions = Map.of("tracing", Map.of("duration", 100));
 
@@ -165,7 +169,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse.error(errors) - 创建错误响应")
-    void testGraphQLResponse_Error() {
+    void testGraphQLResponseError() {
         GraphQLResponse.GraphQLError error = new GraphQLResponse.GraphQLError(
                 "Field 'user' not found",
                 List.of(new GraphQLResponse.Location(1, 5)),
@@ -183,7 +187,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse.error(message) - 创建单个错误响应")
-    void testGraphQLResponse_ErrorSingleMessage() {
+    void testGraphQLResponseErrorSingleMessage() {
         GraphQLResponse<Object> response = GraphQLResponse.error("语法错误");
 
         assertNull(response.getData());
@@ -194,7 +198,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse.partial(data, errors) - 部分错误响应")
-    void testGraphQLResponse_Partial() {
+    void testGraphQLResponsePartial() {
         String data = "部分数据";
         GraphQLResponse.GraphQLError error = new GraphQLResponse.GraphQLError("部分字段解析失败", null, null, null);
 
@@ -207,7 +211,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse.GraphQLError - 错误对象")
-    void testGraphQLResponse_GraphQLError() {
+    void testGraphQLResponseGraphQLError() {
         GraphQLResponse.Location location = new GraphQLResponse.Location(10, 20);
         GraphQLResponse.GraphQLError error = new GraphQLResponse.GraphQLError(
                 "Validation failed",
@@ -226,7 +230,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse.Location - 位置对象")
-    void testGraphQLResponse_Location() {
+    void testGraphQLResponseLocation() {
         GraphQLResponse.Location location = new GraphQLResponse.Location(5, 15);
 
         assertEquals(5, location.getLine());
@@ -235,7 +239,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GraphQLResponse Builder 模式")
-    void testGraphQLResponse_Builder() {
+    void testGraphQLResponseBuilder() {
         GraphQLResponse<String> response = GraphQLResponse.<String>builder()
                 .data("result")
                 .errors(List.of())
@@ -251,7 +255,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse.success(data) - 创建成功响应")
-    void testGrpcResponse_Success() {
+    void testGrpcResponseSuccess() {
         String data = "gRPC 数据";
         GrpcResponse<String> response = GrpcResponse.success(data);
 
@@ -263,7 +267,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse.success(code, data) - 自定义状态码的成功响应")
-    void testGrpcResponse_SuccessWithCode() {
+    void testGrpcResponseSuccessWithCode() {
         String data = "数据";
         GrpcResponse<String> response = GrpcResponse.success(GrpcResponse.STATUS_OK, data);
 
@@ -274,7 +278,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse.error(code, message) - 创建错误响应")
-    void testGrpcResponse_Error() {
+    void testGrpcResponseError() {
         GrpcResponse<Void> response = GrpcResponse.error(GrpcResponse.STATUS_NOT_FOUND, "资源未找到");
 
         assertFalse(response.isSuccess());
@@ -285,7 +289,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse.error(code, message, details) - 带详情的错误响应")
-    void testGrpcResponse_ErrorWithDetails() {
+    void testGrpcResponseErrorWithDetails() {
         GrpcResponse.ErrorDetail detail = new GrpcResponse.ErrorDetail(
                 "google.rpc.BadRequest",
                 Map.of("field", "email", "reason", "invalid format")
@@ -306,7 +310,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse.isSuccess() - 判断是否成功")
-    void testGrpcResponse_IsSuccess() {
+    void testGrpcResponseIsSuccess() {
         assertTrue(GrpcResponse.success("data").isSuccess());
         assertFalse(GrpcResponse.error(GrpcResponse.STATUS_INTERNAL, "error").isSuccess());
         assertFalse(GrpcResponse.error(GrpcResponse.STATUS_UNAVAILABLE, "unavailable").isSuccess());
@@ -314,7 +318,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse 状态码常量")
-    void testGrpcResponse_StatusConstants() {
+    void testGrpcResponseStatusConstants() {
         assertEquals(0, GrpcResponse.STATUS_OK);
         assertEquals(1, GrpcResponse.STATUS_CANCELLED);
         assertEquals(2, GrpcResponse.STATUS_UNKNOWN);
@@ -336,7 +340,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse.ErrorDetail - 错误详情")
-    void testGrpcResponse_ErrorDetail() {
+    void testGrpcResponseErrorDetail() {
         GrpcResponse.ErrorDetail detail = new GrpcResponse.ErrorDetail(
                 "type.googleapis.com/google.rpc.ErrorInfo",
                 Map.of("reason", "RATE_LIMITED", "domain", "example.com")
@@ -349,7 +353,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("GrpcResponse Builder 模式")
-    void testGrpcResponse_Builder() {
+    void testGrpcResponseBuilder() {
         GrpcResponse<String> response = GrpcResponse.<String>builder()
                 .code(GrpcResponse.STATUS_OK)
                 .message("Success")
@@ -366,7 +370,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("JsonApiResponse.ofResource(resource) - 创建单个资源响应")
-    void testJsonApiResponse_OfResource() {
+    void testJsonApiResponseOfResource() {
         JsonApiResponse.ResourceObject resource = new JsonApiResponse.ResourceObject(
                 "users",
                 "123",
@@ -384,9 +388,11 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("JsonApiResponse.ofCollection(resources) - 创建资源集合响应")
-    void testJsonApiResponse_OfCollection() {
-        JsonApiResponse.ResourceObject resource1 = new JsonApiResponse.ResourceObject("users", "1", Map.of("name", "user1"), null, null);
-        JsonApiResponse.ResourceObject resource2 = new JsonApiResponse.ResourceObject("users", "2", Map.of("name", "user2"), null, null);
+    void testJsonApiResponseOfCollection() {
+        JsonApiResponse.ResourceObject resource1 =
+            new JsonApiResponse.ResourceObject("users", "1", Map.of("name", "user1"), null, null);
+        JsonApiResponse.ResourceObject resource2 =
+            new JsonApiResponse.ResourceObject("users", "2", Map.of("name", "user2"), null, null);
 
         JsonApiResponse<Object> response = JsonApiResponse.ofCollection(Arrays.asList(resource1, resource2));
 
@@ -399,7 +405,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("JsonApiResponse.ofErrors(errors) - 创建错误响应")
-    void testJsonApiResponse_OfErrors() {
+    void testJsonApiResponseOfErrors() {
         JsonApiResponse.ErrorObject error = new JsonApiResponse.ErrorObject(
                 "400",
                 "VALIDATION_ERROR",
@@ -420,7 +426,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("JsonApiResponse.ResourceObject - 资源对象")
-    void testJsonApiResponse_ResourceObject() {
+    void testJsonApiResponseResourceObject() {
         JsonApiResponse.Links links = new JsonApiResponse.Links("/users/123", null, null, null, null, null);
         JsonApiResponse.ResourceObject resource = new JsonApiResponse.ResourceObject(
                 "articles",
@@ -443,7 +449,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("JsonApiResponse.ErrorObject - 错误对象")
-    void testJsonApiResponse_ErrorObject() {
+    void testJsonApiResponseErrorObject() {
         JsonApiResponse.ErrorSource source = new JsonApiResponse.ErrorSource("/data/attributes/password", "password");
         JsonApiResponse.ErrorObject error = new JsonApiResponse.ErrorObject(
                 "422",
@@ -466,7 +472,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("JsonApiResponse.Links - 链接对象")
-    void testJsonApiResponse_Links() {
+    void testJsonApiResponseLinks() {
         JsonApiResponse.Links links = new JsonApiResponse.Links(
                 "/api/users",
                 "/api/users/related",
@@ -486,7 +492,7 @@ class StandardOtherClassesTest {
 
     @Test
     @DisplayName("JsonApiResponse Builder 模式")
-    void testJsonApiResponse_Builder() {
+    void testJsonApiResponseBuilder() {
         JsonApiResponse.Links links = new JsonApiResponse.Links("/api/articles", null, null, null, null, null);
         JsonApiResponse<Object> response = JsonApiResponse.builder()
                 .data(List.of())

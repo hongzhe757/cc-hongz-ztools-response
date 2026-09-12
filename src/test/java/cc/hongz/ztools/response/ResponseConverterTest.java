@@ -20,7 +20,12 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link ResponseConverter} 响应转换器的单元测试.
@@ -38,7 +43,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(Result) - Result 转 AjaxResult (成功)")
-    void testToAjaxResult_FromResult_Success() {
+    void testToAjaxResultFromResultSuccess() {
         Result<String> result = Result.success("测试数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(result);
 
@@ -50,7 +55,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(Result) - Result 转 AjaxResult (失败)")
-    void testToAjaxResult_FromResult_Failure() {
+    void testToAjaxResultFromResultFailure() {
         Result<Void> result = Result.failure(400, "参数错误");
         AjaxResult ajax = ResponseConverter.toAjaxResult(result);
 
@@ -61,7 +66,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(Result) - null 处理")
-    void testToAjaxResult_FromResult_Null() {
+    void testToAjaxResultFromResultNull() {
         AjaxResult ajax = ResponseConverter.toAjaxResult((Result<?>) null);
 
         assertNotNull(ajax);
@@ -71,7 +76,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(AliResponse) - AliResponse 转 AjaxResult")
-    void testToAjaxResult_FromAliResponse() {
+    void testToAjaxResultFromAliResponse() {
         AliResponse<String> ali = AliResponse.success("阿里数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(ali);
 
@@ -82,7 +87,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(TencentResponse) - TencentResponse 转 AjaxResult")
-    void testToAjaxResult_FromTencentResponse() {
+    void testToAjaxResultFromTencentResponse() {
         TencentResponse<String> tencent = TencentResponse.success("腾讯数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(tencent);
 
@@ -93,7 +98,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(BaiduResponse) - BaiduResponse 转 AjaxResult")
-    void testToAjaxResult_FromBaiduResponse() {
+    void testToAjaxResultFromBaiduResponse() {
         BaiduResponse<String> baidu = BaiduResponse.success("百度数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(baidu);
 
@@ -104,7 +109,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(ProblemDetail) - ProblemDetail 转 AjaxResult")
-    void testToAjaxResult_FromProblemDetail() {
+    void testToAjaxResultFromProblemDetail() {
         ProblemDetail problem = ProblemDetail.badRequest("参数无效");
         AjaxResult ajax = ResponseConverter.toAjaxResult(problem);
 
@@ -116,7 +121,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(GraphQLResponse) - GraphQLResponse 转 AjaxResult")
-    void testToAjaxResult_FromGraphQLResponse() {
+    void testToAjaxResultFromGraphQLResponse() {
         GraphQLResponse<String> graphql = GraphQLResponse.success("GraphQL 数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(graphql);
 
@@ -127,7 +132,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(GrpcResponse) - GrpcResponse 转 AjaxResult")
-    void testToAjaxResult_FromGrpcResponse() {
+    void testToAjaxResultFromGrpcResponse() {
         GrpcResponse<String> grpc = GrpcResponse.success("gRPC 数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(grpc);
 
@@ -138,7 +143,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(RedisResponse) - RedisResponse 转 AjaxResult")
-    void testToAjaxResult_FromRedisResponse() {
+    void testToAjaxResultFromRedisResponse() {
         RedisResponse<String> redis = RedisResponse.get("key", "value");
         AjaxResult ajax = ResponseConverter.toAjaxResult(redis);
 
@@ -148,7 +153,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(WebSocketMessage) - WebSocketMessage 转 AjaxResult")
-    void testToAjaxResult_FromWebSocketMessage() {
+    void testToAjaxResultFromWebSocketMessage() {
         WebSocketMessage<String> ws = WebSocketMessage.text("WS 数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(ws);
 
@@ -159,7 +164,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(SseEvent) - SseEvent 转 AjaxResult")
-    void testToAjaxResult_FromSseEvent() {
+    void testToAjaxResultFromSseEvent() {
         SseEvent<String> sse = SseEvent.message("SSE 数据");
         AjaxResult ajax = ResponseConverter.toAjaxResult(sse);
 
@@ -170,7 +175,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(JsonResponse) - JsonResponse 转 AjaxResult")
-    void testToAjaxResult_FromJsonResponse() {
+    void testToAjaxResultFromJsonResponse() {
         JsonResponse json = JsonResponse.success("{\"key\":\"value\"}");
         AjaxResult ajax = ResponseConverter.toAjaxResult(json);
 
@@ -180,7 +185,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toAjaxResult(MapResponse) - MapResponse 转 AjaxResult")
-    void testToAjaxResult_FromMapResponse() {
+    void testToAjaxResultFromMapResponse() {
         Map<String, Object> data = Map.of("key", "value");
         MapResponse mapResp = MapResponse.success(data);
         AjaxResult ajax = ResponseConverter.toAjaxResult(mapResp);
@@ -193,7 +198,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toResult(AjaxResult) - AjaxResult 转 Result (成功)")
-    void testToResult_Success() {
+    void testToResultSuccess() {
         AjaxResult ajax = AjaxResult.success("200", "操作成功", "数据");
         Result<String> result = ResponseConverter.toResult(ajax);
 
@@ -205,7 +210,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toResult(AjaxResult) - AjaxResult 转 Result (失败)")
-    void testToResult_Failure() {
+    void testToResultFailure() {
         // AjaxResult.error("400","参数错误") 匹配 error(String msg, Object data) → code=500, msg="400"
         // 使用三参数版本明确指定 code
         AjaxResult ajax = AjaxResult.error("400", "参数错误", null);
@@ -218,7 +223,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toResult(null) - null 处理")
-    void testToResult_Null() {
+    void testToResultNull() {
         Result<?> result = ResponseConverter.toResult(null);
 
         assertNotNull(result);
@@ -230,7 +235,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("aliToTencent - 阿里转腾讯 (成功)")
-    void testAliToTencent_Success() {
+    void testAliToTencentSuccess() {
         AliResponse<String> ali = AliResponse.success("数据");
         TencentResponse<String> tencent = ResponseConverter.aliToTencent(ali);
 
@@ -240,7 +245,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("aliToTencent - 阿里转腾讯 (失败)")
-    void testAliToTencent_Error() {
+    void testAliToTencentError() {
         AliResponse<Void> ali = AliResponse.error("400", "错误");
         TencentResponse<Void> tencent = ResponseConverter.aliToTencent(ali);
 
@@ -251,7 +256,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("tencentToAli - 腾讯转阿里 (成功)")
-    void testTencentToAli_Success() {
+    void testTencentToAliSuccess() {
         TencentResponse<String> tencent = TencentResponse.success("数据");
         AliResponse<String> ali = ResponseConverter.tencentToAli(tencent);
 
@@ -262,7 +267,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("baiduToTencent - 百度转腾讯 (成功)")
-    void testBaiduToTencent_Success() {
+    void testBaiduToTencentSuccess() {
         BaiduResponse<String> baidu = BaiduResponse.success("数据");
         TencentResponse<String> tencent = ResponseConverter.baiduToTencent(baidu);
 
@@ -355,7 +360,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toMapResponse - AjaxResult 转 MapResponse (Map 数据)")
-    void testToMapResponse_WithMapData() {
+    void testToMapResponseWithMapData() {
         Map<String, Object> data = new HashMap<>();
         data.put("key", "value");
         AjaxResult ajax = AjaxResult.success("200", "成功", data);
@@ -368,7 +373,7 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toMapResponse - AjaxResult 转 MapResponse (非 Map 数据)")
-    void testToMapResponse_WithNonMapData() {
+    void testToMapResponseWithNonMapData() {
         AjaxResult ajax = AjaxResult.success("200", "成功", "字符串数据");
         MapResponse mapResp = ResponseConverter.toMapResponse(ajax);
 
@@ -443,18 +448,20 @@ class ResponseConverterTest {
 
     @Test
     @DisplayName("toDataListInfo - MyBatisPlusPageResponse 转 DataListInfo")
-    void testToDataListInfo_FromMyBatisPlus() {
+    void testToDataListInfoFromMyBatisPlus() {
         // 由于 MyBatisPlusPageResponse 需要 IPage 对象，这里测试 null 处理
-        DataListInfo info = ResponseConverter.toDataListInfo((cc.hongz.ztools.response.framework.MyBatisPlusPageResponse<?>) null);
+        DataListInfo info = ResponseConverter.toDataListInfo(
+            (cc.hongz.ztools.response.framework.MyBatisPlusPageResponse<?>) null);
         assertNotNull(info);
         assertEquals(0, info.getTotal());
     }
 
     @Test
     @DisplayName("toDataListInfo - PageHelperPageResponse 转 DataListInfo")
-    void testToDataListInfo_FromPageHelper() {
+    void testToDataListInfoFromPageHelper() {
         // 由于 PageHelperPageResponse 需要 PageInfo 对象，这里测试 null 处理
-        DataListInfo info = ResponseConverter.toDataListInfo((cc.hongz.ztools.response.framework.PageHelperPageResponse<?>) null);
+        DataListInfo info = ResponseConverter.toDataListInfo(
+            (cc.hongz.ztools.response.framework.PageHelperPageResponse<?>) null);
         assertNotNull(info);
         assertEquals(0, info.getTotal());
     }

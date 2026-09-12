@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * protocol 包响应类的单元测试.
@@ -23,7 +27,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent.message(data) - 创建默认消息事件")
-    void testSseEvent_Message() {
+    void testSseEventMessage() {
         String data = "SSE 数据";
         SseEvent<String> event = SseEvent.message(data);
 
@@ -36,7 +40,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent.of(event, data) - 创建自定义类型事件")
-    void testSseEvent_Of() {
+    void testSseEventOf() {
         String eventType = "notification";
         String data = "通知内容";
         SseEvent<String> event = SseEvent.of(eventType, data);
@@ -47,7 +51,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent.withId(id, event, data) - 创建带 ID 的事件")
-    void testSseEvent_WithId() {
+    void testSseEventWithId() {
         String id = "event-123";
         String eventType = "update";
         String data = "更新数据";
@@ -60,7 +64,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent.withRetry(event, data, retry) - 创建带重试的事件")
-    void testSseEvent_WithRetry() {
+    void testSseEventWithRetry() {
         String eventType = "heartbeat";
         String data = "心跳";
         Long retry = 5000L;
@@ -73,7 +77,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent.toSseString() - 转换为 SSE 格式字符串")
-    void testSseEvent_ToSseString() {
+    void testSseEventToSseString() {
         SseEvent<String> event = SseEvent.<String>builder()
                 .id("123")
                 .event("message")
@@ -93,7 +97,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent.toSseString() - 部分字段为空")
-    void testSseEvent_ToSseString_PartialFields() {
+    void testSseEventToSseStringPartialFields() {
         SseEvent<String> event = SseEvent.message("only data");
         String sseString = event.toSseString();
 
@@ -105,7 +109,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent Builder 模式")
-    void testSseEvent_Builder() {
+    void testSseEventBuilder() {
         SseEvent<Map<String, Object>> event = SseEvent.<Map<String, Object>>builder()
                 .id("evt-001")
                 .event("data-update")
@@ -121,7 +125,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("SseEvent Getter/Setter")
-    void testSseEvent_GettersSetters() {
+    void testSseEventGettersSetters() {
         SseEvent<String> event = new SseEvent<>();
         event.setId("id-1");
         event.setEvent("custom");
@@ -138,7 +142,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage.text(payload) - 创建文本消息")
-    void testWebSocketMessage_Text() {
+    void testWebSocketMessageText() {
         String payload = "Hello WebSocket";
         WebSocketMessage<String> message = WebSocketMessage.text(payload);
 
@@ -152,7 +156,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage.withId(messageId, payload) - 创建带 ID 的消息")
-    void testWebSocketMessage_WithId() {
+    void testWebSocketMessageWithId() {
         String messageId = "msg-456";
         String payload = "带 ID 的消息";
         WebSocketMessage<String> message = WebSocketMessage.withId(messageId, payload);
@@ -165,7 +169,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage.close(code, reason) - 创建关闭消息")
-    void testWebSocketMessage_Close() {
+    void testWebSocketMessageClose() {
         int code = 1000;
         String reason = "Normal Closure";
         WebSocketMessage<String> message = WebSocketMessage.close(code, reason);
@@ -179,7 +183,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage.ping() - 创建 Ping 消息")
-    void testWebSocketMessage_Ping() {
+    void testWebSocketMessagePing() {
         WebSocketMessage<String> message = WebSocketMessage.ping();
 
         assertEquals("ping", message.getType());
@@ -189,7 +193,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage.pong() - 创建 Pong 消息")
-    void testWebSocketMessage_Pong() {
+    void testWebSocketMessagePong() {
         WebSocketMessage<String> message = WebSocketMessage.pong();
 
         assertEquals("pong", message.getType());
@@ -199,7 +203,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage.isText() - 判断是否为文本消息")
-    void testWebSocketMessage_IsText() {
+    void testWebSocketMessageIsText() {
         assertTrue(WebSocketMessage.text("data").isText());
         assertFalse(WebSocketMessage.ping().isText());
         assertFalse(WebSocketMessage.close(1000, "reason").isText());
@@ -207,7 +211,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage.isClose() - 判断是否为关闭消息")
-    void testWebSocketMessage_IsClose() {
+    void testWebSocketMessageIsClose() {
         assertTrue(WebSocketMessage.close(1000, "reason").isClose());
         assertFalse(WebSocketMessage.text("data").isClose());
         assertFalse(WebSocketMessage.ping().isClose());
@@ -215,7 +219,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage Builder 模式")
-    void testWebSocketMessage_Builder() {
+    void testWebSocketMessageBuilder() {
         Map<String, Object> metadata = Map.of("userId", 123L);
         WebSocketMessage<String> message = WebSocketMessage.<String>builder()
                 .type("text")
@@ -234,7 +238,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("WebSocketMessage Getter/Setter")
-    void testWebSocketMessage_GettersSetters() {
+    void testWebSocketMessageGettersSetters() {
         WebSocketMessage<String> message = new WebSocketMessage<>();
         message.setType("binary");
         message.setPayload("binary-data");
@@ -253,7 +257,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse.of(rootElement, data) - 创建简单响应")
-    void testXmlToJsonResponse_Of() {
+    void testXmlToJsonResponseOf() {
         String rootElement = "root";
         Map<String, Object> data = Map.of("key", "value");
         XmlToJsonResponse<Map<String, Object>> response = XmlToJsonResponse.of(rootElement, data);
@@ -268,7 +272,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse.withAttributes(...) - 创建带属性的响应")
-    void testXmlToJsonResponse_WithAttributes() {
+    void testXmlToJsonResponseWithAttributes() {
         String rootElement = "user";
         String data = "张三";
         Map<String, String> attributes = Map.of("id", "123", "type", "admin");
@@ -284,7 +288,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse.full(...) - 创建完整响应")
-    void testXmlToJsonResponse_Full() {
+    void testXmlToJsonResponseFull() {
         String rootElement = "order";
         Map<String, Object> data = Map.of("orderId", "ORD-001");
         Map<String, String> attributes = Map.of("version", "1.0");
@@ -305,7 +309,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse.hasAttributes() - 判断是否有属性")
-    void testXmlToJsonResponse_HasAttributes() {
+    void testXmlToJsonResponseHasAttributes() {
         XmlToJsonResponse<String> resp1 = XmlToJsonResponse.of("root", "data");
         assertFalse(resp1.hasAttributes());
 
@@ -319,7 +323,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse.hasNamespaces() - 判断是否有命名空间")
-    void testXmlToJsonResponse_HasNamespaces() {
+    void testXmlToJsonResponseHasNamespaces() {
         XmlToJsonResponse<String> resp1 = XmlToJsonResponse.of("root", "data");
         assertFalse(resp1.hasNamespaces());
 
@@ -333,7 +337,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse.hasOriginalXml() - 判断是否保留原始 XML")
-    void testXmlToJsonResponse_HasOriginalXml() {
+    void testXmlToJsonResponseHasOriginalXml() {
         XmlToJsonResponse<String> resp1 = XmlToJsonResponse.of("root", "data");
         assertFalse(resp1.hasOriginalXml());
 
@@ -355,7 +359,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse Builder 模式")
-    void testXmlToJsonResponse_Builder() {
+    void testXmlToJsonResponseBuilder() {
         XmlToJsonResponse<String> response = XmlToJsonResponse.<String>builder()
                 .rootElement("response")
                 .data("成功")
@@ -373,7 +377,7 @@ class ProtocolResponseTest {
 
     @Test
     @DisplayName("XmlToJsonResponse Getter/Setter")
-    void testXmlToJsonResponse_GettersSetters() {
+    void testXmlToJsonResponseGettersSetters() {
         XmlToJsonResponse<String> response = new XmlToJsonResponse<>();
         response.setRootElement("test");
         response.setData("data-value");

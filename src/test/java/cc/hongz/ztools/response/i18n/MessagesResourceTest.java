@@ -7,7 +7,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * classpath 消息资源文件（messages_zh_CN / messages_en_US）加载与内容校验.

@@ -6,7 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * common 包其他类的单元测试.
@@ -24,7 +28,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("DataListInfo.of(total, totalPage, list) - 创建完整分页数据")
-    void testDataListInfo_OfFull() {
+    void testDataListInfoOfFull() {
         List<String> list = Arrays.asList("a", "b", "c");
         DataListInfo info = DataListInfo.of(100, 10, list);
 
@@ -36,7 +40,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("DataListInfo.of(list) - 创建仅含数据的对象")
-    void testDataListInfo_OfListOnly() {
+    void testDataListInfoOfListOnly() {
         List<String> list = Arrays.asList("x", "y");
         DataListInfo info = DataListInfo.of(list);
 
@@ -47,7 +51,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("DataListInfo.empty() - 创建空对象")
-    void testDataListInfo_Empty() {
+    void testDataListInfoEmpty() {
         DataListInfo info = DataListInfo.empty();
 
         assertEquals(0, info.getTotal());
@@ -58,7 +62,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("DataListInfo 构造函数")
-    void testDataListInfo_Constructors() {
+    void testDataListInfoConstructors() {
         // 三参数构造
         DataListInfo info1 = new DataListInfo(50, 5, List.of("a"));
         assertEquals(50, info1.getTotal());
@@ -77,7 +81,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("DataListInfo Getter/Setter")
-    void testDataListInfo_GettersSetters() {
+    void testDataListInfoGettersSetters() {
         DataListInfo info = new DataListInfo();
         info.setTotal(200);
         info.setTotalPage(20);
@@ -92,7 +96,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("CursorPageData.of(records, nextCursor, hasMore, size) - 完整参数")
-    void testCursorPageData_OfFull() {
+    void testCursorPageDataOfFull() {
         List<String> records = Arrays.asList("item1", "item2");
         String nextCursor = "cursor_123";
         boolean hasMore = true;
@@ -108,7 +112,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("CursorPageData.of(records, nextCursor, size) - 自动推断 hasMore")
-    void testCursorPageData_OfAutoInfer() {
+    void testCursorPageDataOfAutoInfer() {
         List<String> records = List.of("item1");
 
         // 有游标，hasMore 应为 true
@@ -126,7 +130,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("CursorPageData.empty() - 创建空对象")
-    void testCursorPageData_Empty() {
+    void testCursorPageDataEmpty() {
         CursorPageData<Object> page = CursorPageData.empty();
 
         assertNotNull(page.getRecords());
@@ -138,7 +142,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("CursorPageData.hasNext() - 判断是否有下一页")
-    void testCursorPageData_HasNext() {
+    void testCursorPageDataHasNext() {
         // hasMore=true 且 nextCursor 不为 null
         CursorPageData<String> page1 = CursorPageData.of(List.of("a"), "cursor", true, 10);
         assertTrue(page1.hasNext());
@@ -154,7 +158,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("CursorPageData.getCount() - 获取记录数")
-    void testCursorPageData_GetCount() {
+    void testCursorPageDataGetCount() {
         CursorPageData<String> page1 = CursorPageData.of(Arrays.asList("a", "b", "c"), null, false, 10);
         assertEquals(3, page1.getCount());
 
@@ -168,7 +172,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("CursorPageData Getter/Setter")
-    void testCursorPageData_GettersSetters() {
+    void testCursorPageDataGettersSetters() {
         CursorPageData<String> page = new CursorPageData<>();
         page.setRecords(List.of("test"));
         page.setNextCursor("cursor_xyz");
@@ -185,7 +189,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("KeysetPageData.of(records, nextKey, hasMore, size) - 完整参数")
-    void testKeysetPageData_OfFull() {
+    void testKeysetPageDataOfFull() {
         List<String> records = Arrays.asList("order1", "order2");
         String nextKey = "key_456";
         boolean hasMore = true;
@@ -201,7 +205,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("KeysetPageData.of(records, nextKey, size) - 自动推断 hasMore")
-    void testKeysetPageData_OfAutoInfer() {
+    void testKeysetPageDataOfAutoInfer() {
         List<String> records = List.of("order1");
 
         // 有键值，hasMore 应为 true
@@ -219,7 +223,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("KeysetPageData.empty() - 创建空对象")
-    void testKeysetPageData_Empty() {
+    void testKeysetPageDataEmpty() {
         KeysetPageData<Object> page = KeysetPageData.empty();
 
         assertNotNull(page.getRecords());
@@ -231,7 +235,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("KeysetPageData.hasNext() - 判断是否有下一页")
-    void testKeysetPageData_HasNext() {
+    void testKeysetPageDataHasNext() {
         // hasMore=true 且 nextKey 不为 null
         KeysetPageData<String> page1 = KeysetPageData.of(List.of("a"), "key", true, 10);
         assertTrue(page1.hasNext());
@@ -247,7 +251,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("KeysetPageData.getCount() - 获取记录数")
-    void testKeysetPageData_GetCount() {
+    void testKeysetPageDataGetCount() {
         KeysetPageData<String> page1 = KeysetPageData.of(Arrays.asList("a", "b"), null, false, 10);
         assertEquals(2, page1.getCount());
 
@@ -261,7 +265,7 @@ class CommonOtherClassesTest {
 
     @Test
     @DisplayName("KeysetPageData Getter/Setter")
-    void testKeysetPageData_GettersSetters() {
+    void testKeysetPageDataGettersSetters() {
         KeysetPageData<String> page = new KeysetPageData<>();
         page.setRecords(List.of("test"));
         page.setNextKey("key_abc");

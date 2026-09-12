@@ -12,7 +12,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * {@link I18nResponseBuilder} 与 classpath 消息资源、Locale 切换的集成测试.
