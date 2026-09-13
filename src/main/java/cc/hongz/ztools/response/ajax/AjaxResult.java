@@ -335,6 +335,18 @@ public class AjaxResult<T> {
      * @return 成功返回 true
      */
     public boolean isSuccess() {
-        return "200".equals(code) || "0".equals(code) || "success".equalsIgnoreCase(code);
+        if ("200".equals(code) || "0".equals(code) || "success".equalsIgnoreCase(code)) {
+            return true;
+        }
+        if (code == null || code.isEmpty()) {
+            return false;
+        }
+        // 业务状态码（如 ZAUTH_2000）：带下划线前缀，数字段以 2 开头（对应 HTTP 2xx）表示成功
+        final int underscoreIndex = code.lastIndexOf('_');
+        if (underscoreIndex < 0) {
+            return false;
+        }
+        final String number = code.substring(underscoreIndex + 1);
+        return !number.isEmpty() && number.startsWith("2") && number.chars().allMatch(Character::isDigit);
     }
 }
